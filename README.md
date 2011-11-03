@@ -16,4 +16,5 @@ see [wiki](https://github.com/ghillairet/blueprints-emf/wiki/Install)
 
 Version 0.1.0 2011/3/11
 
-*    First implementation, provides JSON reader and writer for EMF models.
+*    First implementation, provides URIHandler implementation for graph databases supporting blueprints.
+*    Basic read and write of emf models in blueprints data format.
