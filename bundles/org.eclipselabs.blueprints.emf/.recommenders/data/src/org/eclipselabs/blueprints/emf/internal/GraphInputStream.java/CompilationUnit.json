@@ -1,0 +1,1263 @@
+{
+  "_id": "60f14346e4b5eb2c45320ef33cf411d59f5e1fce",
+  "creationTimestamp": "2011-11-04T00:31:38.006+01:00",
+  "imports": [
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "[Ljava/lang/String"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler",
+      "fingerprint": "1292b115ab1e594c546cb041468522b034e2470f"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/resource/URIConverter$Loadable",
+      "fingerprint": "aa9c4a423964466c74556d28fce756447ad9cc9b"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/resource/ResourceSet",
+      "fingerprint": "aa9c4a423964466c74556d28fce756447ad9cc9b"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/resource/Resource",
+      "fingerprint": "aa9c4a423964466c74556d28fce756447ad9cc9b"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/EObject",
+      "fingerprint": "aa9c4a423964466c74556d28fce756447ad9cc9b"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/EDataType",
+      "fingerprint": "aa9c4a423964466c74556d28fce756447ad9cc9b"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/EClass",
+      "fingerprint": "aa9c4a423964466c74556d28fce756447ad9cc9b"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/ecore/EAttribute",
+      "fingerprint": "aa9c4a423964466c74556d28fce756447ad9cc9b"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/common/util/URI",
+      "fingerprint": "ef0a5e4281b4433cbe401736d15867fcc8d0c079"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lorg/eclipse/emf/common/util/EList",
+      "fingerprint": "ef0a5e4281b4433cbe401736d15867fcc8d0c079"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Ljava/util/Set",
+      "fingerprint": "d20242b206ed6487edbe28c9b0719bf0a99c5774"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Ljava/util/Map",
+      "fingerprint": "d20242b206ed6487edbe28c9b0719bf0a99c5774"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Ljava/util/Iterator",
+      "fingerprint": "d20242b206ed6487edbe28c9b0719bf0a99c5774"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Ljava/io/InputStream",
+      "fingerprint": "d20242b206ed6487edbe28c9b0719bf0a99c5774"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lcom/tinkerpop/blueprints/pgm/Vertex",
+      "fingerprint": "048a2f7f7e5b68fc60d08be3675a56e913ee2914"
+    },
+    {
+      "kind": "TYPE_REFERENCE",
+      "name": "Lcom/tinkerpop/blueprints/pgm/Graph",
+      "fingerprint": "048a2f7f7e5b68fc60d08be3675a56e913ee2914"
+    }
+  ],
+  "kind": "SNAPSHOT",
+  "analysedOn": "2011-11-04T00:31:38.006+01:00",
+  "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream",
+  "primaryType": {
+    "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream",
+    "superclass": "Ljava/io/InputStream",
+    "interfaces": [
+      "Lorg/eclipse/emf/ecore/resource/URIConverter$Loadable"
+    ],
+    "fields": [
+      "Lcom/tinkerpop/blueprints/pgm/Graph",
+      "Ljava/util/Map"
+    ],
+    "methods": [
+      {
+        "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+        "line": 45,
+        "nestedTypes": [],
+        "modifiers": 4,
+        "objects": [
+          {
+            "type": "Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler",
+            "names": [
+              "uriHandler"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/util/Set",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lcom/tinkerpop/blueprints/pgm/Element.getPropertyKeys()Ljava/util/Set;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Set.contains(Ljava/lang/Object;)Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 63
+              }
+            ]
+          },
+          {
+            "type": "Ljava/io/InputStream",
+            "names": [
+              "this"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "[Ljava/lang/String",
+            "names": [],
+            "kind": "LOCAL",
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Vertex.getOutEdges([Ljava/lang/String;)Ljava/lang/Iterable;",
+                "argumentName": "unnamed",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 73
+              }
+            ],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/util/Iterator",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Ljava/lang/Iterable.iterator()Ljava/util/Iterator;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.next()Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 77
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/common/util/EList",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/EClass.getEAllStructuralFeatures()Lorg/eclipse/emf/common/util/EList;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/List.iterator()Ljava/util/Iterator;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/util/Iterator",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Ljava/util/List.iterator()Ljava/util/Iterator;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.next()Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              },
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.hasNext()Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              }
+            ]
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Graph",
+            "names": [
+              "graph"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.graph;Lcom/tinkerpop/blueprints/pgm/Graph",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/resource/ResourceSet",
+            "names": [
+              "resourceSet"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/resource/Resource.getResourceSet()Lorg/eclipse/emf/ecore/resource/ResourceSet;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "argumentName": "resourceSet",
+                "argumentIndex": 1,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 47
+              }
+            ],
+            "receiverCallSites": [
+              {
+                "receiver": "resourceSet",
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 80
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [
+              "object"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/util/EcoreUtil.create(Lorg/eclipse/emf/ecore/EClass;)Lorg/eclipse/emf/ecore/EObject;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "argumentName": "object",
+                "argumentIndex": 1,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 56
+              }
+            ],
+            "receiverCallSites": [
+              {
+                "receiver": "object",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EObject.eClass()Lorg/eclipse/emf/ecore/EClass;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              },
+              {
+                "receiver": "object",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EObject.eSet(Lorg/eclipse/emf/ecore/EStructuralFeature;Ljava/lang/Object;)V",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 68
+              }
+            ]
+          },
+          {
+            "type": "Ljava/util/Map",
+            "names": [
+              "options"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.options;Ljava/util/Map",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/resource/Resource",
+            "names": [
+              "resource"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "resource",
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/Resource.getResourceSet()Lorg/eclipse/emf/ecore/resource/ResourceSet;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 45
+              }
+            ]
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Vertex",
+            "names": [
+              "vertex"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "argumentName": "vertex",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 47
+              },
+              {
+                "targetMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "argumentName": "vertex",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 56
+              }
+            ],
+            "receiverCallSites": [
+              {
+                "receiver": "vertex",
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Element.getProperty(Ljava/lang/String;)Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 65
+              },
+              {
+                "receiver": "vertex",
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Vertex.getOutEdges([Ljava/lang/String;)Ljava/lang/Iterable;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 73
+              },
+              {
+                "receiver": "vertex",
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Element.getPropertyKeys()Ljava/util/Set;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 63
+              }
+            ]
+          },
+          {
+            "type": "Ljava/util/Iterator",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Ljava/lang/Iterable.iterator()Ljava/util/Iterator;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.hasNext()Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 74
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/common/util/URI",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/common/util/URI.createURI(Ljava/lang/String;)Lorg/eclipse/emf/common/util/URI;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;",
+                "argumentName": "unnamed",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 80
+              }
+            ],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EClass",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/EObject.eClass()Lorg/eclipse/emf/ecore/EClass;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EClass.getEAllStructuralFeatures()Lorg/eclipse/emf/common/util/EList;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+        "superDeclaration": "Lorg/eclipse/emf/ecore/resource/URIConverter$Loadable.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+        "firstDeclaration": "Lorg/eclipse/emf/ecore/resource/URIConverter$Loadable.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+        "line": 34,
+        "nestedTypes": [],
+        "modifiers": 1,
+        "objects": [
+          {
+            "type": "Ljava/io/InputStream",
+            "names": [
+              "this"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/resource/ResourceSet",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/resource/Resource.getResourceSet()Lorg/eclipse/emf/ecore/resource/ResourceSet;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "argumentName": "resourceSet",
+                "argumentIndex": 1,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 47
+              }
+            ],
+            "receiverCallSites": [
+              {
+                "receiver": "resourceSet",
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 80
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/resource/Resource",
+            "names": [
+              "resource"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "argumentName": "resource",
+                "argumentIndex": 1,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "lineNumber": 37
+              }
+            ],
+            "receiverCallSites": [
+              {
+                "receiver": "resource",
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/Resource.getResourceSet()Lorg/eclipse/emf/ecore/resource/ResourceSet;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 45
+              },
+              {
+                "receiver": "resource",
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/Resource.getContents()Lorg/eclipse/emf/common/util/EList;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "line": 39
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/common/util/URI",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/common/util/URI.createURI(Ljava/lang/String;)Lorg/eclipse/emf/common/util/URI;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;",
+                "argumentName": "unnamed",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 80
+              }
+            ],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/common/util/EList",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/resource/Resource.getContents()Lorg/eclipse/emf/common/util/EList;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/List.add(Ljava/lang/Object;)Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "line": 39
+              }
+            ]
+          },
+          {
+            "type": "Ljava/util/Iterator",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Ljava/lang/Iterable.iterator()Ljava/util/Iterator;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.next()Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "line": 36
+              },
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.hasNext()Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "line": 36
+              }
+            ]
+          },
+          {
+            "type": "Ljava/util/Map",
+            "names": [
+              "options"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.options;Ljava/util/Map",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "options",
+                "targetMethod": "Ljava/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "line": 34
+              }
+            ]
+          },
+          {
+            "type": "Ljava/util/Iterator",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Ljava/util/List.iterator()Ljava/util/Iterator;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.hasNext()Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              },
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.next()Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/EObject.eContainer()Lorg/eclipse/emf/ecore/EObject;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [
+              "object"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/util/EcoreUtil.create(Lorg/eclipse/emf/ecore/EClass;)Lorg/eclipse/emf/ecore/EObject;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "argumentName": "object",
+                "argumentIndex": 1,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 56
+              },
+              {
+                "targetMethod": "Ljava/util/List.add(Ljava/lang/Object;)Z",
+                "argumentName": "object",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "lineNumber": 39
+              }
+            ],
+            "receiverCallSites": [
+              {
+                "receiver": "object",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EObject.eContainer()Lorg/eclipse/emf/ecore/EObject;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "line": 38
+              },
+              {
+                "receiver": "object",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EObject.eSet(Lorg/eclipse/emf/ecore/EStructuralFeature;Ljava/lang/Object;)V",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 68
+              },
+              {
+                "receiver": "object",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EObject.eClass()Lorg/eclipse/emf/ecore/EClass;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Graph",
+            "names": [
+              "graph"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.graph;Lcom/tinkerpop/blueprints/pgm/Graph",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "graph",
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Graph.getVertices()Ljava/lang/Iterable;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.loadResource(Lorg/eclipse/emf/ecore/resource/Resource;)V",
+                "line": 36
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/common/util/EList",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/EClass.getEAllStructuralFeatures()Lorg/eclipse/emf/common/util/EList;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/List.iterator()Ljava/util/Iterator;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              }
+            ]
+          },
+          {
+            "type": "[Ljava/lang/String",
+            "names": [],
+            "kind": "LOCAL",
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Vertex.getOutEdges([Ljava/lang/String;)Ljava/lang/Iterable;",
+                "argumentName": "unnamed",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 73
+              }
+            ],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EClass",
+            "names": [],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/EObject.eClass()Lorg/eclipse/emf/ecore/EClass;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EClass.getEAllStructuralFeatures()Lorg/eclipse/emf/common/util/EList;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/Resource;Lorg/eclipse/emf/ecore/xmi/XMLResource$URIHandler;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 52
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.read()I",
+        "superDeclaration": "Ljava/io/InputStream.read()I",
+        "firstDeclaration": "Ljava/io/InputStream.read()I",
+        "line": 87,
+        "nestedTypes": [],
+        "modifiers": 1,
+        "objects": [
+          {
+            "type": "Ljava/util/Map",
+            "names": [
+              "options"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.options;Ljava/util/Map",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/io/InputStream",
+            "names": [
+              "this"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Graph",
+            "names": [
+              "graph"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.graph;Lcom/tinkerpop/blueprints/pgm/Graph",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          }
+        ]
+      },
+      {
+        "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+        "line": 63,
+        "nestedTypes": [],
+        "modifiers": 2,
+        "objects": [
+          {
+            "type": "Ljava/util/Set",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lcom/tinkerpop/blueprints/pgm/Element.getPropertyKeys()Ljava/util/Set;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Set.contains(Ljava/lang/Object;)Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 63
+              }
+            ]
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Graph",
+            "names": [
+              "graph"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.graph;Lcom/tinkerpop/blueprints/pgm/Graph",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EAttribute",
+            "names": [
+              "attribute"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipse/emf/ecore/EObject.eSet(Lorg/eclipse/emf/ecore/EStructuralFeature;Ljava/lang/Object;)V",
+                "argumentName": "attribute",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "lineNumber": 68
+              }
+            ],
+            "receiverCallSites": [
+              {
+                "receiver": "attribute",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EAttribute.getEAttributeType()Lorg/eclipse/emf/ecore/EDataType;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 66
+              },
+              {
+                "receiver": "attribute",
+                "targetMethod": "Lorg/eclipse/emf/ecore/ENamedElement.getName()Ljava/lang/String;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 65
+              },
+              {
+                "receiver": "attribute",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EStructuralFeature.isTransient()Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 63
+              },
+              {
+                "receiver": "attribute",
+                "targetMethod": "Lorg/eclipse/emf/ecore/ENamedElement.getName()Ljava/lang/String;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 63
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EDataType",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/EAttribute.getEAttributeType()Lorg/eclipse/emf/ecore/EDataType;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipse/emf/ecore/util/EcoreUtil.createFromString(Lorg/eclipse/emf/ecore/EDataType;Ljava/lang/String;)Ljava/lang/Object;",
+                "argumentName": "unnamed",
+                "argumentIndex": -1,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "lineNumber": 66
+              }
+            ],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Vertex",
+            "names": [
+              "vertex"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "vertex",
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Element.getProperty(Ljava/lang/String;)Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 65
+              },
+              {
+                "receiver": "vertex",
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Element.getPropertyKeys()Ljava/util/Set;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 63
+              }
+            ]
+          },
+          {
+            "type": "Ljava/util/Map",
+            "names": [
+              "options"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.options;Ljava/util/Map",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [
+              "object"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "object",
+                "targetMethod": "Lorg/eclipse/emf/ecore/EObject.eSet(Lorg/eclipse/emf/ecore/EStructuralFeature;Ljava/lang/Object;)V",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.buildEObjectAttribute(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EAttribute;)V",
+                "line": 68
+              }
+            ]
+          },
+          {
+            "type": "Ljava/io/InputStream",
+            "names": [
+              "this"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          }
+        ]
+      },
+      {
+        "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.\u003cinit\u003e(Lcom/tinkerpop/blueprints/pgm/Graph;Ljava/util/Map;)V",
+        "superDeclaration": "Ljava/io/InputStream.\u003cinit\u003e()V",
+        "firstDeclaration": "Ljava/io/InputStream.\u003cinit\u003e()V",
+        "line": 27,
+        "nestedTypes": [],
+        "modifiers": 1,
+        "objects": [
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Graph",
+            "names": [
+              "graph"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.graph;Lcom/tinkerpop/blueprints/pgm/Graph",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Graph",
+            "names": [
+              "graph"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/util/Map",
+            "names": [
+              "options"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/util/Map",
+            "names": [
+              "options"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.options;Ljava/util/Map",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/io/InputStream",
+            "names": [
+              "this"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          }
+        ]
+      },
+      {
+        "name": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+        "line": 73,
+        "nestedTypes": [],
+        "modifiers": 4,
+        "objects": [
+          {
+            "type": "Ljava/util/Iterator",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Ljava/lang/Iterable.iterator()Ljava/util/Iterator;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.next()Ljava/lang/Object;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 77
+              }
+            ]
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Vertex",
+            "names": [
+              "vertex"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "vertex",
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Vertex.getOutEdges([Ljava/lang/String;)Ljava/lang/Iterable;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 73
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/resource/ResourceSet",
+            "names": [
+              "resourceSet"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "resourceSet",
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 80
+              }
+            ]
+          },
+          {
+            "type": "Lorg/eclipse/emf/common/util/URI",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/common/util/URI.createURI(Ljava/lang/String;)Lorg/eclipse/emf/common/util/URI;"
+            },
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;",
+                "argumentName": "unnamed",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 80
+              }
+            ],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/util/Iterator",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Ljava/lang/Iterable.iterator()Ljava/util/Iterator;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": [
+              {
+                "receiver": "unnamed",
+                "targetMethod": "Ljava/util/Iterator.hasNext()Z",
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "line": 74
+              }
+            ]
+          },
+          {
+            "type": "[Ljava/lang/String",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "parameterCallSites": [
+              {
+                "targetMethod": "Lcom/tinkerpop/blueprints/pgm/Vertex.getOutEdges([Ljava/lang/String;)Ljava/lang/Iterable;",
+                "argumentName": "unnamed",
+                "argumentIndex": 0,
+                "sourceMethod": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.createEObject(Lcom/tinkerpop/blueprints/pgm/Vertex;Lorg/eclipse/emf/ecore/resource/ResourceSet;)Lorg/eclipse/emf/ecore/EObject;",
+                "lineNumber": 73
+              }
+            ],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/resource/ResourceSet.getEObject(Lorg/eclipse/emf/common/util/URI;Z)Lorg/eclipse/emf/ecore/EObject;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/io/InputStream",
+            "names": [
+              "this"
+            ],
+            "kind": "PARAMETER",
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lcom/tinkerpop/blueprints/pgm/Graph",
+            "names": [
+              "graph"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.graph;Lcom/tinkerpop/blueprints/pgm/Graph",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Ljava/util/Map",
+            "names": [
+              "options"
+            ],
+            "kind": "FIELD",
+            "definitionSite": {
+              "kind": "FIELD",
+              "definedByField": "Lorg/eclipselabs/blueprints/emf/internal/GraphInputStream.options;Ljava/util/Map",
+              "lineNumber": 0
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          },
+          {
+            "type": "Lorg/eclipse/emf/ecore/EObject",
+            "names": [
+              "unnamed"
+            ],
+            "kind": "LOCAL",
+            "definitionSite": {
+              "kind": "METHOD_RETURN",
+              "lineNumber": 0,
+              "definedByMethod": "Lorg/eclipse/emf/ecore/util/EcoreUtil.create(Lorg/eclipse/emf/ecore/EClass;)Lorg/eclipse/emf/ecore/EObject;"
+            },
+            "parameterCallSites": [],
+            "receiverCallSites": []
+          }
+        ]
+      }
+    ],
+    "line": 0,
+    "memberTypes": [],
+    "modifiers": 33
+  }
+}
