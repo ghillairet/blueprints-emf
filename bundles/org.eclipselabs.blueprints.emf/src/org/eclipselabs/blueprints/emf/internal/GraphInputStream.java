@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter.Loadable;
@@ -20,7 +23,7 @@ import com.tinkerpop.blueprints.pgm.Graph;
 import com.tinkerpop.blueprints.pgm.Vertex;
 
 public class GraphInputStream extends InputStream implements Loadable {
-
+	
 	private final Graph graph;
 	private final Map<?, ?> options;
 
@@ -33,11 +36,16 @@ public class GraphInputStream extends InputStream implements Loadable {
 	public void loadResource(Resource resource) throws IOException {
 		XMLResource.URIHandler uriHandler = (XMLResource.URIHandler) options.get(XMLResource.OPTION_URI_HANDLER);
 		
+		if (uriHandler == null)
+			uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
+		
 		for (Vertex vertex: graph.getVertices()) {
 			EObject object = buildEObject(vertex, resource, uriHandler);
+			
 			if (object != null && object.eContainer() == null) {
 				resource.getContents().add(object);
 			}
+			
 		}
 	}
 	
@@ -54,9 +62,58 @@ public class GraphInputStream extends InputStream implements Loadable {
 				EAttribute attribute = (EAttribute) feature;
 				
 				buildEObjectAttribute(vertex, object, attribute);
+			} else {
+				EReference reference = (EReference) feature;
+				
+				buildEObjectReference(vertex, object, reference, resource, uriHandler);
 			}
 		}
 		return object;
+	}
+	
+	private void buildEObjectReference(Vertex vertex, EObject object, EReference reference, Resource resource, XMLResource.URIHandler uriHandler) {
+		if (reference.isTransient())
+			return;
+		
+		final Iterable<Edge> edges = vertex.getOutEdges(reference.getName());
+		
+		if (edges.iterator().hasNext()) {
+			
+			if (reference.isMany()) {
+				
+				@SuppressWarnings("unchecked")
+				EList<EObject> values = (EList<EObject>) object.eGet(reference);
+				
+				for (Edge edge: edges) {
+					EObject target = buildEObjectReference(edge, resource, uriHandler, reference.isResolveProxies());
+					if (target != null)
+						values.add(target);
+				}
+				
+			}
+		}
+	}
+
+	private EObject buildEObjectReference(Edge edge, Resource resource, XMLResource.URIHandler uriHandler, boolean isResolveProxies) {
+		Vertex vertex = edge.getInVertex();
+		if (vertex == null) {
+			return null;
+		}
+		
+		URI proxyURI = URI.createURI((String) vertex.getId());
+		URI resolvedProxyURI = uriHandler.resolve(proxyURI);
+		
+		final EObject target;
+		if (isResolveProxies) {
+			target = resource.getResourceSet().getEObject(resolvedProxyURI, true);
+		} else {
+			target = createEObject(vertex, resource.getResourceSet());
+			if (target == null)
+				return null;
+			((InternalEObject) target).eSetProxyURI(resolvedProxyURI);
+		}
+		
+		return target;
 	}
 	
 	private void buildEObjectAttribute(Vertex vertex, EObject object, EAttribute attribute) {

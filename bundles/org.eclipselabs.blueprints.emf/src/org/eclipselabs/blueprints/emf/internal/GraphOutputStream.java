@@ -1,6 +1,7 @@
 package org.eclipselabs.blueprints.emf.internal;
 
 import static org.eclipselabs.blueprints.emf.util.BlueprintsEmfUtil.isNativeType;
+import static org.eclipselabs.blueprints.emf.util.GraphUtil.getEdgeID;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -65,15 +68,31 @@ public class GraphOutputStream extends ByteArrayOutputStream implements URIConve
 		}
 	}
 
-	private Vertex getVertex(URI uri) {
-		if (graph.getVertex(uri) != null) {
-			return graph.getVertex(uri);
+	private Vertex getVertex(EObject object) {
+		final URI uri = EcoreUtil.getURI(object);
+		
+		Vertex vertex = graph.getVertex(uri);
+		if (vertex != null) {
+			return vertex;
 		}
-		return graph.addVertex(uri);
+		
+		vertex = graph.addVertex(uri);
+		final URI eClassURI = EcoreUtil.getURI(object.eClass());
+		Vertex eClassVertex = graph.getVertex(eClassURI);
+		
+		if (eClassVertex == null) {
+			eClassVertex = graph.addVertex(eClassURI);
+		}
+		
+		graph.addEdge(getEdgeID(object, object.eClass(), 
+				EcorePackage.eINSTANCE.getETypedElement_EType()), 
+				vertex, eClassVertex, "eClass");
+		
+		return vertex;
 	}
 	
 	protected void saveEObject(EObject object, URIHandler uriHandler) {
-		final Vertex vertex = getVertex(EcoreUtil.getURI(object));
+		final Vertex vertex = getVertex(object);
 		
 		for (EAttribute attr: object.eClass().getEAllAttributes()) {
 			if (object.eIsSet(attr)) {
@@ -88,12 +107,12 @@ public class GraphOutputStream extends ByteArrayOutputStream implements URIConve
 					@SuppressWarnings("unchecked")
 					Collection<EObject> values = (Collection<EObject>) object.eGet(ref);
 					for (EObject value: values) {
-						Vertex valueVertex = graph.addVertex(EcoreUtil.getURI(value));
+						Vertex valueVertex = getVertex(value);
 						graph.addEdge(GraphUtil.getEdgeID(object, value, ref), valueVertex, vertex, ref.getName());
 					}
 				} else {
 					EObject value = (EObject) object.eGet(ref);
-					Vertex valueVertex = getVertex(EcoreUtil.getURI(value));
+					Vertex valueVertex = getVertex(value);
 					graph.addEdge(GraphUtil.getEdgeID(object, value, ref), valueVertex, vertex, ref.getName());
 				}
 			}
@@ -107,22 +126,18 @@ public class GraphOutputStream extends ByteArrayOutputStream implements URIConve
 			if (FeatureMapUtil.isFeatureMap(attribute)) {
 				FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
 				Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
-
+				
 				while (iterator.hasNext()) {
-//					DBObject dbEntry = new BasicDBObject();
-//					FeatureMap.Entry entry = iterator.next();
-//					EStructuralFeature feature = entry.getEStructuralFeature();
-//					dbEntry.put("key", EcoreUtil.getURI(feature).toString());
-//
-//					if (feature instanceof EAttribute)
-//						dbEntry.put("value", getDBAttributeValue((EAttribute) feature, entry.getValue()));
-//					else
-//						dbEntry.put("value", buildDBReference(db, (EReference) feature, (EObject) entry.getValue(), uriHandler));
-//
-//					dbFeatureMap.add(dbEntry);
+					// TODO
+					FeatureMap.Entry entry = iterator.next();
+					EStructuralFeature feature = entry.getEStructuralFeature();
+					
+					if (feature instanceof EAttribute) {
+						value = getEAttributeValue((EAttribute) feature, entry.getValue());
+					} else {
+						// TODO
+					}
 				}
-
-//				value = dbFeatureMap;
 			} else if (attribute.isMany()) {
 				
 				EDataType eDataType = attribute.getEAttributeType();
