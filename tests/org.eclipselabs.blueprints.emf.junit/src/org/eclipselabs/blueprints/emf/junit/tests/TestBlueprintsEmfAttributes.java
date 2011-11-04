@@ -15,11 +15,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipselabs.blueprints.emf.junit.model.ETypes;
 import org.eclipselabs.blueprints.emf.junit.model.ModelFactory;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.junit.model.User;
@@ -42,11 +44,9 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 		user.setName("John");
 		
 		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
-		
 		assertNotNull(resource);
 		
-		resource.getContents().add(user);
-		
+		resource.getContents().add(user);		
 		resource.save(options);
 		
 		assertTrue(graph.getVertices().iterator().hasNext());
@@ -59,6 +59,30 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 		assertNotNull(vertex.getProperty("name"));
 		assertTrue(vertex.getProperty("name") instanceof String);
 		assertEquals("John", vertex.getProperty("name"));
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testSaveObjectWithManyValueAttribute() throws IOException {
+		ETypes e = ModelFactory.eINSTANCE.createETypes();
+		e.getEStrings().add("one");
+		e.getEStrings().add("two");
+		e.getEStrings().add("three");
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		assertNotNull(resource);
+		
+		resource.getContents().add(e);		
+		resource.save(options);
+		
+		assertNotNull(graph.getVertex(EcoreUtil.getURI(e)));
+		
+		Vertex v = graph.getVertex(EcoreUtil.getURI(e));
+		
+		assertTrue(v.getProperty("eStrings") instanceof List);
+		assertEquals("one", ((List)v.getProperty("eStrings")).get(0));
+		assertEquals("two", ((List)v.getProperty("eStrings")).get(1));
+		assertEquals("three", ((List)v.getProperty("eStrings")).get(2));
 	}
 	
 	@Test
