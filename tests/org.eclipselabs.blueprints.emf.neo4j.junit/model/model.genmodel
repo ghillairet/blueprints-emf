@@ -5,7 +5,8 @@
     modelPluginID="org.eclipselabs.blueprints.emf.neo4j.junit" modelName="Model" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="6.0" copyrightFields="false">
   <foreignModel>model.ecore</foreignModel>
-  <genPackages prefix="Model" resource="XML" disposableProviderFactory="true" ecorePackage="model.ecore#/">
+  <genPackages prefix="Model" basePackage="org.eclipselabs.blueprints.emf.neo4j.junit"
+      resource="XML" disposableProviderFactory="true" ecorePackage="model.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.ecore#//Sex">
       <genEnumLiterals ecoreEnumLiteral="model.ecore#//Sex/MALE"/>
       <genEnumLiterals ecoreEnumLiteral="model.ecore#//Sex/FEMALE"/>
