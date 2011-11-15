@@ -66,6 +66,8 @@ public class GraphOutputStream extends ByteArrayOutputStream implements URIConve
 		for (TreeIterator<EObject> it = resource.getAllContents(); it.hasNext();) {
 			saveEObject(it.next(), uriHandler);
 		}
+		
+//		graph.shutdown();
 	}
 
 	private Vertex getVertex(EObject object) {
