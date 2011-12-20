@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.blueprints.emf.GraphURIHandlerImpl;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
+import org.eclipselabs.blueprints.emf.util.Tokens;
 import org.junit.Before;
 
 import com.tinkerpop.blueprints.pgm.Graph;
@@ -36,7 +37,7 @@ public abstract class TestSupport {
 		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		
 		graph = new TinkerGraph();
-		options.put(GraphURIHandlerImpl.OPTION_GRAPH_OBJECT, graph);
+		options.put(Tokens.BLUEPRINTS_GRAPH_OBJECT, graph);
 		
 		resourceSet = new ResourceSetImpl();
 		resourceSet.getLoadOptions().putAll(options);

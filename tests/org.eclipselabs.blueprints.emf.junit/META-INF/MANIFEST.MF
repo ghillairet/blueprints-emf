@@ -31,5 +31,6 @@ Export-Package: org.eclipselabs.blueprints.emf.junit,
  org.eclipselabs.blueprints.emf.junit.model,
  org.eclipselabs.blueprints.emf.junit.model.impl,
  org.eclipselabs.blueprints.emf.junit.model.util,
+ org.eclipselabs.blueprints.emf.junit.suite,
  org.eclipselabs.blueprints.emf.junit.support,
  org.eclipselabs.blueprints.emf.junit.tests
