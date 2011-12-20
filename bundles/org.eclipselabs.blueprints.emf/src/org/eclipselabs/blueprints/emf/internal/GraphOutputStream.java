@@ -1,7 +1,8 @@
 package org.eclipselabs.blueprints.emf.internal;
 
 import static org.eclipselabs.blueprints.emf.util.BlueprintsEmfUtil.isNativeType;
-import static org.eclipselabs.blueprints.emf.util.GraphUtil.getEdgeID;
+import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_ECLASS;
+import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_INDEX_KEY;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -28,7 +28,11 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.XMLResource.URIHandler;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
 
+import com.tinkerpop.blueprints.pgm.CloseableSequence;
+import com.tinkerpop.blueprints.pgm.Edge;
 import com.tinkerpop.blueprints.pgm.Graph;
+import com.tinkerpop.blueprints.pgm.Index;
+import com.tinkerpop.blueprints.pgm.IndexableGraph;
 import com.tinkerpop.blueprints.pgm.Vertex;
 
 /**
@@ -38,12 +42,16 @@ import com.tinkerpop.blueprints.pgm.Vertex;
  */
 public class GraphOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable {
 
-	private final Graph graph;
+	private final IndexableGraph graph;
 	private final Map<?, ?> options;
 	private Resource resource;
+	private final Index<Vertex> vertexIndex;
+	private final Index<Edge> edgeIndex;
 	
-	public GraphOutputStream(Graph graph, Map<?, ?> options) {
-		this.graph = graph;
+	public GraphOutputStream(Graph graph, Index<Vertex> vertexIndex, Index<Edge> edgeIndex, Map<?, ?> options) {
+		this.graph = (IndexableGraph) graph;
+		this.vertexIndex = vertexIndex;
+		this.edgeIndex = edgeIndex;
 		this.options = options;
 	}
 
@@ -72,25 +80,37 @@ public class GraphOutputStream extends ByteArrayOutputStream implements URIConve
 
 	private Vertex getVertex(EObject object) {
 		final URI uri = EcoreUtil.getURI(object);
+		String safeURI = GraphUtil.safeURI(uri);
 		
-		Vertex vertex = graph.getVertex(uri);
-		if (vertex != null) {
-			return vertex;
+		final CloseableSequence<Vertex> vertices = vertexIndex.get(BLUEPRINTS_EMF_INDEX_KEY, safeURI);
+		final Vertex vertex;
+		
+		if (vertices.hasNext()) {
+			vertex = vertices.next();
+		} else {
+			vertex = graph.addVertex(null);
+			vertex.setProperty(BLUEPRINTS_EMF_INDEX_KEY, safeURI);
+			
+			URI eClassURI = EcoreUtil.getURI(object.eClass());
+			vertex.setProperty(BLUEPRINTS_EMF_ECLASS, eClassURI.toString());
 		}
-		
-		vertex = graph.addVertex(uri);
-		final URI eClassURI = EcoreUtil.getURI(object.eClass());
-		Vertex eClassVertex = graph.getVertex(eClassURI);
-		
-		if (eClassVertex == null) {
-			eClassVertex = graph.addVertex(eClassURI);
-		}
-		
-		graph.addEdge(getEdgeID(object, object.eClass(), 
-				EcorePackage.eINSTANCE.getETypedElement_EType()), 
-				vertex, eClassVertex, "eClass");
 		
 		return vertex;
+	}
+	
+	private Edge getEdge(EReference reference, EObject source, EObject target) {
+		final String edgeID = GraphUtil.getEdgeID(source, target, reference);
+		final Iterable<Edge> edges = edgeIndex.get(BLUEPRINTS_EMF_INDEX_KEY, edgeID);
+		final Edge edge;
+		
+		if (edges.iterator().hasNext()) {
+			edge = edges.iterator().next();
+		} else {
+			edge = graph.addEdge(null, getVertex(source), getVertex(target), reference.getName());
+			edge.setProperty(BLUEPRINTS_EMF_INDEX_KEY, edgeID);
+			edgeIndex.put(BLUEPRINTS_EMF_INDEX_KEY, edgeID, edge);
+		}
+		return edge;
 	}
 	
 	protected void saveEObject(EObject object, URIHandler uriHandler) {
@@ -109,13 +129,11 @@ public class GraphOutputStream extends ByteArrayOutputStream implements URIConve
 					@SuppressWarnings("unchecked")
 					Collection<EObject> values = (Collection<EObject>) object.eGet(ref);
 					for (EObject value: values) {
-						Vertex valueVertex = getVertex(value);
-						graph.addEdge(GraphUtil.getEdgeID(object, value, ref), valueVertex, vertex, ref.getName());
+						getEdge(ref, object, value);
 					}
 				} else {
 					EObject value = (EObject) object.eGet(ref);
-					Vertex valueVertex = getVertex(value);
-					graph.addEdge(GraphUtil.getEdgeID(object, value, ref), valueVertex, vertex, ref.getName());
+					getEdge(ref, object, value);
 				}
 			}
 		}

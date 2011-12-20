@@ -45,7 +45,6 @@ public class GraphInputStream extends InputStream implements Loadable {
 			if (object != null && object.eContainer() == null) {
 				resource.getContents().add(object);
 			}
-			
 		}
 	}
 	

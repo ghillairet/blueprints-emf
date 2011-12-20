@@ -1,5 +1,7 @@
 package org.eclipselabs.blueprints.emf;
 
+import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_GRAPH_OBJECT;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,21 +11,22 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipselabs.blueprints.emf.internal.GraphInputStream;
 import org.eclipselabs.blueprints.emf.internal.GraphOutputStream;
+import org.eclipselabs.blueprints.emf.util.GraphUtil;
 
 import com.tinkerpop.blueprints.pgm.Graph;
+import com.tinkerpop.blueprints.pgm.IndexableGraph;
 
 public class GraphURIHandlerImpl extends URIHandlerImpl {
-
-	public static final String OPTION_GRAPH_OBJECT = "OPTION_GRAPH_OBJECT";
 	
 	@Override
 	public boolean canHandle(URI uri) {
-		return uri.scheme().equalsIgnoreCase("graph");
+		return true;
+//		return uri.scheme().equalsIgnoreCase("graph");
 	}
 	
 	@Override
 	public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException {
-		final Object objectGraph = options.get(OPTION_GRAPH_OBJECT);
+		final Object objectGraph = options.get(BLUEPRINTS_GRAPH_OBJECT);
 		if (objectGraph instanceof Graph) {
 			return new GraphInputStream((Graph)objectGraph, options);	
 		}
@@ -32,10 +35,13 @@ public class GraphURIHandlerImpl extends URIHandlerImpl {
 	
 	@Override
 	public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException {
-		final Object objectGraph = options.get(OPTION_GRAPH_OBJECT);
-		if (objectGraph instanceof Graph) {
-			return new GraphOutputStream((Graph)objectGraph, options);	
+		final Object objectGraph = options.get(BLUEPRINTS_GRAPH_OBJECT);
+		if (objectGraph instanceof IndexableGraph) {
+			IndexableGraph graph = (IndexableGraph)objectGraph;
+			
+			return new GraphOutputStream(graph, GraphUtil.getVertexIndex(graph), GraphUtil.getEdgeIndex(graph), options);
 		}
 		return null;
 	}
+	
 }

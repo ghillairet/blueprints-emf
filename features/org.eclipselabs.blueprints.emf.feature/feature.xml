@@ -3,7 +3,7 @@
       id="org.eclipselabs.blueprints.emf.feature"
       label="Feature"
       version="0.1.0.qualifier"
-      provider-name="eclipselabs">
+      provider-name="Eclipse Labs">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -17,18 +17,11 @@
       [Enter License Description here.]
    </license>
 
-   <requires>
-      <import plugin="org.eclipse.emf.common"/>
-      <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipse.osgi"/>
-   </requires>
-
    <plugin
          id="org.eclipselabs.blueprints.emf"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.0.qualifier"
          unpack="false"/>
 
 </feature>
