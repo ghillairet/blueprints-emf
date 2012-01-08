@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Guillaume Hillairet.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Guillaume Hillairet - initial API and implementation
+ *******************************************************************************/
 package org.eclipselabs.blueprints.emf.util;
 
 import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_EDGE_INDEX;
@@ -64,7 +74,7 @@ public class GraphUtil {
 	}
 	
 	public static Index<Vertex> getVertexIndex(IndexableGraph graph) {
-		Index<Vertex> vertexIndex = graph.getIndex(BLUEPRINTS_EMF_VERTEX_INDEX,Vertex.class);
+		Index<Vertex> vertexIndex = graph.getIndex(BLUEPRINTS_EMF_VERTEX_INDEX, Vertex.class);
 		if (vertexIndex == null) {
 			vertexIndex= graph.createAutomaticIndex(BLUEPRINTS_EMF_VERTEX_INDEX, Vertex.class, indexKeys);
 		}
@@ -77,6 +87,23 @@ public class GraphUtil {
 			edgeIndex = graph.createAutomaticIndex(BLUEPRINTS_EMF_EDGE_INDEX, Edge.class, indexKeys);
 		}
 		return edgeIndex;
+	}
+	
+	public static Edge getEdge(String edgeID, IndexableGraph graph) {
+		Index<Edge> index = getEdgeIndex(graph);
+		CloseableSequence<Edge> edges = index.get(BLUEPRINTS_EMF_INDEX_KEY, edgeID);
+		if (edges.hasNext()) {
+			return edges.next();
+		}
+		return null;
+	}
+	
+	public static URI getURI(Vertex vertex) {
+		String eKey = (String) vertex.getProperty(BLUEPRINTS_EMF_INDEX_KEY);
+		if (eKey != null) {
+			return URI.createURI(eKey.replaceAll("%23", "#"));
+		}
+		return null;
 	}
 	
 	private final static Set<String> indexKeys = new HashSet<String>();
