@@ -28,3 +28,5 @@ Import-Package: com.tinkerpop.blueprints.pgm,
  org.eclipselabs.blueprints.emf,
  org.junit;version="4.8.2",
  org.osgi.framework;version="1.6.0"
+Require-Bundle: org.eclipselabs.blueprints.emf,
+ org.eclipselabs.blueprints.emf.junit
