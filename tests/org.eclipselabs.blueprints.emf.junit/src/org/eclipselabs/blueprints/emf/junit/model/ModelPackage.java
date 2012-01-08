@@ -1,9 +1,13 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2011 Guillaume Hillairet.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
- */
+ * Contributors:
+ *    Guillaume Hillairet - initial API and implementation
+ *******************************************************************************/
 package org.eclipselabs.blueprints.emf.junit.model;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -607,6 +611,79 @@ public interface ModelPackage extends EPackage {
 	int TARGET_OBJECT_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipselabs.blueprints.emf.junit.model.impl.NodeImpl <em>Node</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipselabs.blueprints.emf.junit.model.impl.NodeImpl
+	 * @see org.eclipselabs.blueprints.emf.junit.model.impl.ModelPackageImpl#getNode()
+	 * @generated
+	 */
+	int NODE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__CHILDREN = 1;
+
+	/**
+	 * The feature id for the '<em><b>One Ref Node</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__ONE_REF_NODE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Many Ref Node</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__MANY_REF_NODE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Parent One</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__PARENT_ONE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Parent Many</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__PARENT_MANY = 5;
+
+	/**
+	 * The number of structural features of the '<em>Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_FEATURE_COUNT = 6;
+
+	/**
 	 * The meta object id for the '{@link org.eclipselabs.blueprints.emf.junit.model.Sex <em>Sex</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -614,7 +691,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.eclipselabs.blueprints.emf.junit.model.impl.ModelPackageImpl#getSex()
 	 * @generated
 	 */
-	int SEX = 5;
+	int SEX = 6;
 
 	/**
 	 * The meta object id for the '<em>URI</em>' data type.
@@ -624,7 +701,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.eclipselabs.blueprints.emf.junit.model.impl.ModelPackageImpl#getURI()
 	 * @generated
 	 */
-	int URI = 6;
+	int URI = 7;
 
 
 	/**
@@ -1228,6 +1305,82 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTargetObject_ArrayAttribute();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipselabs.blueprints.emf.junit.model.Node <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Node</em>'.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node
+	 * @generated
+	 */
+	EClass getNode();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.blueprints.emf.junit.model.Node#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node#getName()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EAttribute getNode_Name();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.blueprints.emf.junit.model.Node#getChildren <em>Children</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Children</em>'.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node#getChildren()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_Children();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipselabs.blueprints.emf.junit.model.Node#getOneRefNode <em>One Ref Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>One Ref Node</em>'.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node#getOneRefNode()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_OneRefNode();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipselabs.blueprints.emf.junit.model.Node#getManyRefNode <em>Many Ref Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Many Ref Node</em>'.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node#getManyRefNode()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_ManyRefNode();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipselabs.blueprints.emf.junit.model.Node#getParentOne <em>Parent One</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent One</em>'.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node#getParentOne()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_ParentOne();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipselabs.blueprints.emf.junit.model.Node#getParentMany <em>Parent Many</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent Many</em>'.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node#getParentMany()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_ParentMany();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipselabs.blueprints.emf.junit.model.Sex <em>Sex</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1719,6 +1872,64 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TARGET_OBJECT__ARRAY_ATTRIBUTE = eINSTANCE.getTargetObject_ArrayAttribute();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipselabs.blueprints.emf.junit.model.impl.NodeImpl <em>Node</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipselabs.blueprints.emf.junit.model.impl.NodeImpl
+		 * @see org.eclipselabs.blueprints.emf.junit.model.impl.ModelPackageImpl#getNode()
+		 * @generated
+		 */
+		EClass NODE = eINSTANCE.getNode();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE__NAME = eINSTANCE.getNode_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__CHILDREN = eINSTANCE.getNode_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>One Ref Node</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__ONE_REF_NODE = eINSTANCE.getNode_OneRefNode();
+
+		/**
+		 * The meta object literal for the '<em><b>Many Ref Node</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__MANY_REF_NODE = eINSTANCE.getNode_ManyRefNode();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent One</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__PARENT_ONE = eINSTANCE.getNode_ParentOne();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent Many</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__PARENT_MANY = eINSTANCE.getNode_ParentMany();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipselabs.blueprints.emf.junit.model.Sex <em>Sex</em>}' enum.

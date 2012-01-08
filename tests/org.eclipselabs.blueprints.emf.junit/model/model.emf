@@ -86,3 +86,11 @@ class TargetObject {
   attr String[*] arrayAttribute;
 }
 
+class Node {
+	attr String name;
+	val Node[*] children;
+	ref Node[?]#parentOne oneRefNode;
+	ref Node[*]#parentMany manyRefNode;
+	ref Node#oneRefNode parentOne;
+	ref Node#manyRefNode parentMany;
+}

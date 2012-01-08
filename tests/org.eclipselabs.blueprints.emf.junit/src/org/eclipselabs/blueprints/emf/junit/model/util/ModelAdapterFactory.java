@@ -1,19 +1,26 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2011 Guillaume Hillairet.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
- */
+ * Contributors:
+ *    Guillaume Hillairet - initial API and implementation
+ *******************************************************************************/
 package org.eclipselabs.blueprints.emf.junit.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipselabs.blueprints.emf.junit.model.*;
+import org.eclipselabs.blueprints.emf.junit.model.Address;
+import org.eclipselabs.blueprints.emf.junit.model.ETypes;
+import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
+import org.eclipselabs.blueprints.emf.junit.model.Node;
+import org.eclipselabs.blueprints.emf.junit.model.PrimaryObject;
+import org.eclipselabs.blueprints.emf.junit.model.TargetObject;
+import org.eclipselabs.blueprints.emf.junit.model.User;
 
 /**
  * <!-- begin-user-doc -->
@@ -90,6 +97,10 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTargetObject(TargetObject object) {
 				return createTargetObjectAdapter();
+			}
+			@Override
+			public Adapter caseNode(Node object) {
+				return createNodeAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -178,6 +189,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTargetObjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.blueprints.emf.junit.model.Node <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipselabs.blueprints.emf.junit.model.Node
+	 * @generated
+	 */
+	public Adapter createNodeAdapter() {
 		return null;
 	}
 

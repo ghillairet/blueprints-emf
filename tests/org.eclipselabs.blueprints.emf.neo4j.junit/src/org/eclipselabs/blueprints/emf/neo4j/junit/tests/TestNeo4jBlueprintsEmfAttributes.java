@@ -1,14 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2011 Guillaume Hillairet.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Guillaume Hillairet - initial API and implementation
- *******************************************************************************/
-package org.eclipselabs.blueprints.emf.junit.tests;
+package org.eclipselabs.blueprints.emf.neo4j.junit.tests;
 
 import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_ECLASS;
 import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_INDEX_KEY;
@@ -29,18 +19,13 @@ import org.eclipselabs.blueprints.emf.junit.model.ETypes;
 import org.eclipselabs.blueprints.emf.junit.model.ModelFactory;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.junit.model.User;
-import org.eclipselabs.blueprints.emf.junit.support.TestSupport;
+import org.eclipselabs.blueprints.emf.neo4j.junit.support.TestSupport;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
 import org.junit.Test;
 
 import com.tinkerpop.blueprints.pgm.Vertex;
 
-/**
- * 
- * @author ghillairet
- *
- */
-public class TestBlueprintsEmfAttributes extends TestSupport {
+public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 	
 	@Test
 	public void testSaveObjectWithTwoStringAttributes() throws IOException {

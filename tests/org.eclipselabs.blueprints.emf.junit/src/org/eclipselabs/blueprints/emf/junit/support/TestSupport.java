@@ -20,30 +20,26 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.blueprints.emf.GraphURIHandlerImpl;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
-import org.eclipselabs.blueprints.emf.util.Tokens;
 import org.junit.Before;
 
-import com.tinkerpop.blueprints.pgm.Graph;
+import com.tinkerpop.blueprints.pgm.IndexableGraph;
 import com.tinkerpop.blueprints.pgm.impls.tg.TinkerGraph;
 
 public abstract class TestSupport {
 	
 	protected final Map<String ,Object> options = new HashMap<String, Object>();
 	protected ResourceSet resourceSet;
-	protected Graph graph;
+	protected IndexableGraph graph;
 	
 	@Before
 	public void tearUp() {
 		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		
 		graph = new TinkerGraph();
-		options.put(Tokens.BLUEPRINTS_GRAPH_OBJECT, graph);
-		
 		resourceSet = new ResourceSetImpl();
-		resourceSet.getLoadOptions().putAll(options);
 		
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl());
+		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
 	}
 	
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<model:Node
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:model="http://www.eclipselabs.org/emfjson/junit"
+    xsi:schemaLocation="http://www.eclipselabs.org/emfjson/junit ../model/model.ecore"
+    name="a"
+    oneRefNode="//@children.0/@children.0/@children.0/@children.0"
+    manyRefNode="//@children.0/@children.0/@children.0 //@children.0/@children.0/@children.0/@children.0">
+  <children
+      name="b">
+    <children
+        name="c">
+      <children
+          name="d"
+          parentMany="/">
+        <children
+            name="e"
+            parentOne="/"
+            parentMany="/"/>
+      </children>
+    </children>
+  </children>
+</model:Node>

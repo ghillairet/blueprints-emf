@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.6"?>
+<?pde version="3.8"?>
 
-<target name="blueprints" sequenceNumber="56">
+<target name="blueprints" sequenceNumber="62">
 <locations>
 <location path="/Users/guillaume/Tools/jackson" type="Directory"/>
 <location path="/Users/guillaume/Tools/jettison" type="Directory"/>
 <location path="${eclipse_home}" type="Profile"/>
 <location path="/Users/guillaume/.m2/repository/com/tinkerpop/blueprints/blueprints-core/1.1" type="Directory"/>
 <location path="/Users/guillaume/.m2/repository/com/tinkerpop/blueprints/blueprints-rexster-graph/1.1" type="Directory"/>
+<location path="/Users/guillaume/.m2/repository/com/tinkerpop/blueprints/blueprints-neo4j-graph/1.1-SNAPSHOT" type="Directory"/>
+<location path="/Users/guillaume/.m2/repository/com/tinkerpop/blueprints/blueprints-orient-graph/1.1-SNAPSHOT" type="Directory"/>
 </locations>
 </target>

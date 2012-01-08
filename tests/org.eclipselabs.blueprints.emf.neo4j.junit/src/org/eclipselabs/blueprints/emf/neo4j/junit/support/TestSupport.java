@@ -19,10 +19,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.blueprints.emf.GraphURIHandlerImpl;
-import org.eclipselabs.blueprints.emf.neo4j.junit.model.ModelPackage;
+import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.junit.Before;
 
-import com.tinkerpop.blueprints.pgm.Graph;
 import com.tinkerpop.blueprints.pgm.Index;
 import com.tinkerpop.blueprints.pgm.IndexableGraph;
 import com.tinkerpop.blueprints.pgm.Vertex;
@@ -32,22 +31,20 @@ public abstract class TestSupport {
 	
 	protected final Map<String ,Object> options = new HashMap<String, Object>();
 	protected ResourceSet resourceSet;
-	protected static Graph graph;
+	protected static IndexableGraph graph;
 	
 	@Before
 	public void tearUp() {
 		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		
 		graph = new Neo4jGraph("/tmp/neo4j");
-		((Neo4jGraph)graph).createManualIndex("test-idx", Vertex.class);
-		
-		options.put(GraphURIHandlerImpl.OPTION_GRAPH_OBJECT, graph);
+//		((Neo4jGraph)graph).createManualIndex("test-idx", Vertex.class);
 		
 		resourceSet = new ResourceSetImpl();
-		resourceSet.getLoadOptions().putAll(options);
+//		resourceSet.getLoadOptions().putAll(options);
 		
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl());
+		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
 	}
 
 	protected Vertex getVertex(String attribute, String value) {

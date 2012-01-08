@@ -1,23 +1,31 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2011 Guillaume Hillairet.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
- */
+ * Contributors:
+ *    Guillaume Hillairet - initial API and implementation
+ *******************************************************************************/
 package org.eclipselabs.blueprints.emf.junit.model.impl;
 
 import org.eclipse.emf.common.util.URI;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipselabs.blueprints.emf.junit.model.*;
+import org.eclipselabs.blueprints.emf.junit.model.Address;
+import org.eclipselabs.blueprints.emf.junit.model.ETypes;
+import org.eclipselabs.blueprints.emf.junit.model.ModelFactory;
+import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
+import org.eclipselabs.blueprints.emf.junit.model.Node;
+import org.eclipselabs.blueprints.emf.junit.model.PrimaryObject;
+import org.eclipselabs.blueprints.emf.junit.model.Sex;
+import org.eclipselabs.blueprints.emf.junit.model.TargetObject;
+import org.eclipselabs.blueprints.emf.junit.model.User;
 
 /**
  * <!-- begin-user-doc -->
@@ -68,6 +76,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 			case ModelPackage.ETYPES: return createETypes();
 			case ModelPackage.PRIMARY_OBJECT: return createPrimaryObject();
 			case ModelPackage.TARGET_OBJECT: return createTargetObject();
+			case ModelPackage.NODE: return createNode();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -155,6 +164,16 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	public TargetObject createTargetObject() {
 		TargetObjectImpl targetObject = new TargetObjectImpl();
 		return targetObject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Node createNode() {
+		NodeImpl node = new NodeImpl();
+		return node;
 	}
 
 	/**

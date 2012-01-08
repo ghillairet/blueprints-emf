@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Guillaume Hillairet.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Guillaume Hillairet - initial API and implementation
+ *******************************************************************************/
 package org.eclipselabs.blueprints.emf.rexster.junit.support;
 
 import java.util.HashMap;
@@ -10,7 +20,6 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.blueprints.emf.GraphURIHandlerImpl;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
-import org.eclipselabs.blueprints.emf.util.Tokens;
 import org.junit.Before;
 
 import com.tinkerpop.blueprints.pgm.impls.rexster.RexsterGraph;
@@ -27,12 +36,12 @@ public class TestSupport {
 		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		
 		graph = new RexsterGraph(baseURI);
-		options.put(Tokens.BLUEPRINTS_GRAPH_OBJECT, graph);
+//		options.put(Tokens.BLUEPRINTS_OBJECT_GRAPH, graph);
 		
 		resourceSet = new ResourceSetImpl();
-		resourceSet.getLoadOptions().putAll(options);
+//		resourceSet.getLoadOptions().putAll(options);
 		
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl());
+		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
 	}
 }

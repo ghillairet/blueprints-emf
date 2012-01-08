@@ -5,11 +5,10 @@ Bundle-SymbolicName: org.eclipselabs.blueprints.emf.neo4j.junit;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
-Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipselabs.blueprints.emf.neo4j.junit.model,
- org.eclipselabs.blueprints.emf.neo4j.junit.model.impl,
- org.eclipselabs.blueprints.emf.neo4j.junit.model.util
+Export-Package: org.eclipselabs.blueprints.emf.neo4j.junit,
+ org.eclipselabs.blueprints.emf.neo4j.junit.support,
+ org.eclipselabs.blueprints.emf.neo4j.junit.tests
 Bundle-ActivationPolicy: lazy
 Import-Package: com.tinkerpop.blueprints.pgm,
  com.tinkerpop.blueprints.pgm.impls.neo4j,
