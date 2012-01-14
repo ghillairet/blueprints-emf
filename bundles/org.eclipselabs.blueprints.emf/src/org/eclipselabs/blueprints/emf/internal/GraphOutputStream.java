@@ -18,6 +18,7 @@ import static org.eclipselabs.blueprints.emf.util.Tokens.RESOURCE_URI;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -234,8 +235,21 @@ public class GraphOutputStream extends ByteArrayOutputStream implements URIConve
 			} else {
 				value = getEAttributeValue(attribute, value);
 			}
-
-			vertex.setProperty(attribute.getName(), value);
+			
+			try {
+				vertex.setProperty(attribute.getName(), value);
+			} catch(IllegalArgumentException e) {
+				// neo4j only accept primitive values for properties
+				if (attribute.isMany() && !value.getClass().isArray()) {
+					Collection<?> values = (Collection<?>) value;
+					Object[] arrayValues = values.toArray();
+					try {
+						vertex.setProperty(attribute.getName(), arrayValues);
+					} catch(Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			}
 		}
 	}
 
