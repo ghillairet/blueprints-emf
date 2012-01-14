@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -29,6 +28,8 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 	
 	@Test
 	public void testSaveObjectWithTwoStringAttributes() throws IOException {
+		assertFalse(graph.getVertices().iterator().hasNext());
+		
 		User user = ModelFactory.eINSTANCE.createUser();
 		user.setUserId("1");
 		user.setName("John");
@@ -53,9 +54,10 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 		assertEquals("John", vertex.getProperty("name"));
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void testSaveObjectWithManyValueAttribute() throws IOException {
+		assertFalse(graph.getVertices().iterator().hasNext());
+		
 		ETypes e = ModelFactory.eINSTANCE.createETypes();
 		e.getEStrings().add("one");
 		e.getEStrings().add("two");
@@ -70,17 +72,22 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 		Vertex v = GraphUtil.getVertex(e, graph);
 		assertNotNull(v);
 		
-		assertTrue(v.getProperty("eStrings") instanceof List);
-		assertEquals("one", ((List)v.getProperty("eStrings")).get(0));
-		assertEquals("two", ((List)v.getProperty("eStrings")).get(1));
-		assertEquals("three", ((List)v.getProperty("eStrings")).get(2));
+		assertTrue(v.getProperty("eStrings").getClass().isArray());
+		Object[] array = (Object[]) v.getProperty("eStrings");
+		
+		assertEquals(3, array.length);
+		assertEquals("one", array[0]);
+		assertEquals("two", array[1]);
+		assertEquals("three", array[2]);
 	}
 	
 	@Test
 	public void testLoadOneObjectWithTwoAttributes() throws IOException {
+		assertFalse(graph.getVertices().iterator().hasNext());
+		
 		Vertex v1 = graph.addVertex(null);
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, GraphUtil.safeURI(URI.createURI("graph:/tmp/test#1")));
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
+		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, "graph:/tmp/test#1");
+		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()).toString());
 		v1.setProperty(RESOURCE_URI, "graph:/tmp/test");
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
@@ -104,15 +111,15 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 		assertFalse(graph.getVertices().iterator().hasNext());
 		
 		Vertex v1 = graph.addVertex(null);
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, GraphUtil.safeURI(URI.createURI("graph:/tmp/test#1")));
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
+		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, "graph:/tmp/test#1");
+		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()).toString());
 		v1.setProperty(RESOURCE_URI, "graph:/tmp/test");
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
 		
 		Vertex v2 = graph.addVertex(null);
-		v2.setProperty(BLUEPRINTS_EMF_INDEX_KEY, GraphUtil.safeURI(URI.createURI("graph:/tmp/test#2")));
-		v2.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
+		v2.setProperty(BLUEPRINTS_EMF_INDEX_KEY, "graph:/tmp/test#2");
+		v2.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()).toString());
 		v2.setProperty(RESOURCE_URI, "graph:/tmp/test");
 		v2.setProperty("userId", "2");
 		v2.setProperty("name", "Paul");

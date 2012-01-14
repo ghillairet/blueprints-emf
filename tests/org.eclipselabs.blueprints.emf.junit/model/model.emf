@@ -1,7 +1,6 @@
-@namespace(uri="http://www.eclipselabs.org/emfjson/junit", prefix="model")
+@namespace(uri="http://www.eclipselabs.org/model", prefix="model")
 package model;
 
-@JSON(root="true")
 class User {
   id attr String userId;
   attr String name;

@@ -1,12 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: EMF Blueprints Neo4J Tests
 Bundle-SymbolicName: org.eclipselabs.blueprints.emf.neo4j.junit;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
+Bundle-Vendor: Eclipse Labs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.blueprints.emf.neo4j.junit,
+ org.eclipselabs.blueprints.emf.neo4j.junit.suite,
  org.eclipselabs.blueprints.emf.neo4j.junit.support,
  org.eclipselabs.blueprints.emf.neo4j.junit.tests
 Bundle-ActivationPolicy: lazy
@@ -26,7 +27,11 @@ Import-Package: com.tinkerpop.blueprints.pgm,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.emf.ecore.xmi.util,
  org.eclipselabs.blueprints.emf,
+ org.eclipselabs.blueprints.emf.junit.model,
+ org.eclipselabs.blueprints.emf.util,
  org.junit;version="4.8.2",
+ org.junit.runner;version="4.8.2",
+ org.junit.runners;version="4.8.2",
  org.osgi.framework;version="1.6.0"
-Require-Bundle: org.eclipselabs.blueprints.emf,
- org.eclipselabs.blueprints.emf.junit
+Require-Bundle: org.eclipse.emf.ecore
+Bundle-Activator: org.eclipselabs.blueprints.emf.neo4j.junit.Activator

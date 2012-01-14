@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.eclipselabs.blueprints.emf.junit.model.ModelPackage#getUser()
- * @model annotation="JSON root='true'"
+ * @model
  * @generated
  */
 public interface User extends EObject {

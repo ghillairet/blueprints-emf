@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: EMF Blueprints tests
+Bundle-Name: EMF Blueprints Tests
 Bundle-SymbolicName: org.eclipselabs.blueprints.emf.junit;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipselabs.blueprints.emf.junit.Activator
-Bundle-Vendor: eclipselabs
+Bundle-Vendor: Eclipse Labs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.tinkerpop.blueprints.pgm,
  com.tinkerpop.blueprints.pgm.impls.tg,
@@ -34,3 +34,4 @@ Export-Package: org.eclipselabs.blueprints.emf.junit,
  org.eclipselabs.blueprints.emf.junit.suite,
  org.eclipselabs.blueprints.emf.junit.support,
  org.eclipselabs.blueprints.emf.junit.tests
+Require-Bundle: org.eclipse.emf.ecore

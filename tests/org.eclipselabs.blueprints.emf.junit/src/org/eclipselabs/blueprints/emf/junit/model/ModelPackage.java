@@ -47,7 +47,7 @@ public interface ModelPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipselabs.org/emfjson/junit";
+	String eNS_URI = "http://www.eclipselabs.org/model";
 
 	/**
 	 * The package namespace name.
