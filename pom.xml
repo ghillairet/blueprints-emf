@@ -12,6 +12,7 @@
 		<module>features/org.eclipselabs.blueprints.emf.feature</module>
 		<module>tests/org.eclipselabs.blueprints.emf.junit</module>
 		<module>tests/org.eclipselabs.blueprints.emf.neo4j.junit</module>
+		<module>tests/org.eclipselabs.blueprints.emf.orientdb.junit</module>
 		<module>build/repository</module>
 	</modules>
 
@@ -34,6 +35,15 @@
 		<repository>
 			<id>codehaus-snapshots</id>
 			<url>http://snapshots.repository.codehaus.org</url>
+		</repository>
+		<repository>
+			<id>orientechnologies-repository</id>
+			<name>Orient Technologies Maven2 Repository</name>
+			<url>http://www.orientechnologies.com/listing/m2</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 
@@ -59,9 +69,24 @@
 			<version>1.1</version>
 		</dependency>
 		<dependency>
+			<groupId>com.tinkerpop.blueprints</groupId>
+			<artifactId>blueprints-orient-graph</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-osgi-bundle</artifactId>
 			<version>0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orient-commons</artifactId>
+			<version>1.0rc6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-core</artifactId>
+			<version>1.0rc6</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -80,6 +105,7 @@
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
+	
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-compiler-plugin</artifactId>
@@ -89,6 +115,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -98,65 +125,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- <plugin> -->
-			<!-- <groupId>org.eclipse.tycho</groupId> -->
-			<!-- <artifactId>tycho-source-plugin</artifactId> -->
-			<!-- <version>${tycho-version}</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>attach-source</id> -->
-			<!-- <phase>process-classes</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>plugin-source</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
-
-			<!-- <plugin> -->
-			<!-- <groupId>org.eclipse.tycho</groupId> -->
-			<!-- <artifactId>target-platform-configuration</artifactId> -->
-			<!-- <version>${tycho-version}</version> -->
-			<!-- <configuration> -->
-			<!-- <target> -->
-			<!-- <artifact> -->
-			<!-- <groupId>org.eclipselabs</groupId> -->
-			<!-- <artifactId>blueprints-emf-parent</artifactId> -->
-			<!-- <version>0.1.0-SNAPSHOT</version> -->
-			<!-- <classifier>build/repository/blueprints-emf</classifier> -->
-			<!-- </artifact> -->
-			<!-- </target> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
-
-			<!-- <plugin> -->
-			<!-- <groupId>org.eclipse.tycho</groupId> -->
-			<!-- <artifactId>target-platform-configuration</artifactId> -->
-			<!-- <version>${tycho-version}</version> -->
-			<!-- <configuration> -->
-			<!-- recommended: use p2-based target platform resolver -->
-			<!-- <resolver>p2</resolver> -->
-			<!-- <pomDependenciesConsider>true</pomDependenciesConsider> -->
-			<!-- configure the p2 target environments for multi-platform build -->
-			<!-- <environments> -->
-			<!-- <environment> -->
-			<!-- <os>linux</os> -->
-			<!-- <ws>gtk</ws> -->
-			<!-- <arch>x86_64</arch> -->
-			<!-- </environment> -->
-			<!-- <environment> -->
-			<!-- <os>linux</os> -->
-			<!-- <ws>gtk</ws> -->
-			<!-- <arch>x86</arch> -->
-			<!-- </environment> -->
-			<!-- <environment> -->
-			<!-- <os>win32</os> -->
-			<!-- <ws>win32</ws> -->
-			<!-- <arch>x86</arch> -->
-			<!-- </environment> -->
-			<!-- </environments> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -201,24 +169,6 @@
 
 		</plugins>
 
-
-		<!-- <pluginManagement> -->
-		<!-- <plugins> -->
-		<!-- <plugin> -->
-		<!-- <groupId>org.eclipse.tycho</groupId> -->
-		<!-- <artifactId>tycho-surefire-plugin</artifactId> -->
-		<!-- <version>0.13</version> -->
-		<!-- </plugin> -->
-		<!-- </plugins> -->
-		<!-- </pluginManagement> -->
-
 	</build>
-
-<!-- 	<pluginRepositories> -->
-<!-- 		<pluginRepository> -->
-<!-- 			<id>tycho-snapshots</id> -->
-<!-- 			<url>https://oss.sonatype.org/content/groups/public/</url> -->
-<!-- 		</pluginRepository> -->
-<!-- 	</pluginRepositories> -->
 
 </project>
