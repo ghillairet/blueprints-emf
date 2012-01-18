@@ -20,49 +20,37 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.blueprints.emf.GraphURIHandlerImpl;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
-import org.junit.AfterClass;
+import org.eclipselabs.blueprints.emf.util.Tokens;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
-import com.tinkerpop.blueprints.pgm.Edge;
 import com.tinkerpop.blueprints.pgm.IndexableGraph;
-import com.tinkerpop.blueprints.pgm.Vertex;
 import com.tinkerpop.blueprints.pgm.impls.neo4j.Neo4jGraph;
 
 public abstract class TestSupport {
-	
+
 	protected final Map<String ,Object> options = new HashMap<String, Object>();
 	protected static ResourceSet resourceSet;
 	protected static IndexableGraph graph;
-	
-	@AfterClass
-	public static void tearDown() {
+
+	@After
+	public void tearDown() {
+		graph.dropIndex(Tokens.BLUEPRINTS_EMF_EDGE_INDEX);
+		graph.dropIndex(Tokens.BLUEPRINTS_EMF_VERTEX_INDEX);
 		graph.clear();
 		graph.shutdown();
 	}
 	
 	@Before
-	public void clear() {
-		for (Vertex vertex: graph.getVertices()) {
-			graph.removeVertex(vertex);
-		}
-		for (Edge edge: graph.getEdges()) {
-			graph.removeEdge(edge);
-		}
-		
-		graph.clear();
-	}
-	
-	@BeforeClass
-	public static void tearUp() {
+	public void tearUp() {
 		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
-		
-		graph = new Neo4jGraph("/tmp/neo4j/tests");
-		
+
+		graph = new Neo4jGraph("data/neo4j/tests");
+
 		resourceSet = new ResourceSetImpl();
-		
+
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
 	}
-	
+
 }

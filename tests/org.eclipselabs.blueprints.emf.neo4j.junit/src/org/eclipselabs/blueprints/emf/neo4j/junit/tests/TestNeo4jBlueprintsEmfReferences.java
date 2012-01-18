@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.pgm.Vertex;
 
 public class TestNeo4jBlueprintsEmfReferences extends TestSupport {
 
-//	@Test
+	@Test
 	public void testSaveTwoObjectsOneReference() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
@@ -58,7 +58,7 @@ public class TestNeo4jBlueprintsEmfReferences extends TestSupport {
 		assertNotNull(GraphUtil.getEdge(edgeID, graph));
 	}
 	
-//	@Test
+	@Test
 	public void testSaveThreeObjectsOneReference() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
@@ -145,7 +145,7 @@ public class TestNeo4jBlueprintsEmfReferences extends TestSupport {
 		assertEquals(u2, friend);
 	}
 	
-//	@Test
+	@Test
 	public void testLoadThreeObjectsWithReferenceMany() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
@@ -208,7 +208,7 @@ public class TestNeo4jBlueprintsEmfReferences extends TestSupport {
 		assertEquals(u3, u1.getFriends().get(1));
 	}
 	
-//	@Test
+	@Test
 	public void testLoadOneObjectFromItsURI() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
@@ -236,8 +236,7 @@ public class TestNeo4jBlueprintsEmfReferences extends TestSupport {
 		assertEquals("John", u1.getName());
 	}
 	
-	
-//	@Test
+	@Test
 	public void testSaveNodeContainmentOneHierarchyOneRoot() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
@@ -306,7 +305,7 @@ public class TestNeo4jBlueprintsEmfReferences extends TestSupport {
 		assertFalse(edges2.iterator().hasNext());
 	}
 	
-//	@Test
+	@Test
 	public void testLoadNodeContainmentOneHierarchyOneRoot() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
