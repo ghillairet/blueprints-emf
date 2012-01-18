@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -54,7 +55,7 @@ public class GraphInputStream extends InputStream implements Loadable {
 	private final Index<Vertex> vertexIndex;
 	@SuppressWarnings("unused")
 	private final Index<Edge> edgeIndex;
-
+	
 	public GraphInputStream(IndexableGraph graph, Index<Vertex> vertexIndex, Index<Edge> edgeIndex, Map<?,?> options) {
 		this.graph = graph;
 		this.vertexIndex = vertexIndex;
@@ -68,30 +69,32 @@ public class GraphInputStream extends InputStream implements Loadable {
 
 		if (uriHandler == null)
 			uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
-		
+
 		if (resource.getURI().hasQuery())
 			uriHandler.setBaseURI(resource.getURI().trimSegments(1).appendSegment("-1"));
 		else
 			uriHandler.setBaseURI(resource.getURI());
-		
+
 		Iterable<Vertex> vertices;
 		if (resource.getURI().hasFragment()) {
 			vertices = vertexIndex.get(BLUEPRINTS_EMF_INDEX_KEY, safeURI(resource.getURI()));
 		} else {
 			vertices = findRootVertex(resource);
 		}
-		
+
 		EList<EObject> contents = resource.getContents();
-		
+
 		for (Vertex vertex: vertices) {
-			
+
 			URI vertexURI = GraphUtil.getURI(vertex);
 			final EObject obj;
+
 			if (vertexURI.hasFragment()) {
 				obj = resource.getEObject(vertexURI.fragment());
 			} else {
 				obj = resource.getResourceSet().getEObject(vertexURI, false);
 			}
+
 			if (obj == null) {
 				EObject object = buildEObject(vertex, resource, uriHandler, false);
 				if (object != null) {
@@ -100,7 +103,7 @@ public class GraphInputStream extends InputStream implements Loadable {
 			}
 		}
 	}
-	
+
 	protected EObject buildEObject(Vertex vertex, Resource resource, XMLResource.URIHandler uriHandler, boolean isProxy) {
 		ResourceSet resourceSet = resource.getResourceSet();
 		if (resourceSet == null) {
@@ -108,25 +111,26 @@ public class GraphInputStream extends InputStream implements Loadable {
 		}
 
 		EObject object = createEObject(vertex, resource.getResourceSet());
-		
+
 		if (isProxy) {
 			URI eURI = GraphUtil.getURI(vertex);
-			if (eURI != null)
+			if (eURI != null) {
 				((InternalEObject)object).eSetProxyURI(uriHandler.resolve(eURI));
+			}
 		}
-		
+
 		for (EStructuralFeature feature: object.eClass().getEAllStructuralFeatures()) {
 			if (feature instanceof EAttribute) 
 			{
 				EAttribute attribute = (EAttribute) feature;
-				
+
 				if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
 					buildEObjectAttribute(vertex, object, attribute);
 			} 
 			else if (!isProxy) 
 			{
 				EReference reference = (EReference) feature;
-				
+
 				if (!reference.isTransient())
 					buildEObjectReference(vertex, object, reference, resource, uriHandler);
 			}
@@ -138,17 +142,17 @@ public class GraphInputStream extends InputStream implements Loadable {
 
 		final Iterable<Edge> edges = vertex.getOutEdges(reference.getName());
 		boolean isResolveProxies = 	reference.isResolveProxies();
-		
+
 		if (edges.iterator().hasNext()) {
-			
+
 			if (reference.isMany()) {	
 				@SuppressWarnings("unchecked")
 				EList<EObject> values = (EList<EObject>) object.eGet(reference);
 
 				for (Edge edge: edges) {
-				
+
 					EObject target = buildEObjectReference(edge, resource, uriHandler, isResolveProxies);
-					
+
 					if (target != null) {
 						values.add(target);
 					}
@@ -156,9 +160,9 @@ public class GraphInputStream extends InputStream implements Loadable {
 
 			} else {
 				Edge edge = edges.iterator().next();
-		
+
 				EObject target = buildEObjectReference(edge, resource, uriHandler, isResolveProxies);
-				
+
 				if (target != null) {
 					object.eSet(reference, target);
 				}
@@ -171,7 +175,7 @@ public class GraphInputStream extends InputStream implements Loadable {
 		if (vertex == null) {
 			return null;
 		}
-		
+
 		Object objectURI = vertex.getProperty(Tokens.BLUEPRINTS_EMF_PROXY_URI);
 		if (objectURI != null) {
 			return buildProxy(vertex, resource, uriHandler, isResolveProxies);	
@@ -184,13 +188,13 @@ public class GraphInputStream extends InputStream implements Loadable {
 		EObject eObject;
 		URI vertexURI = GraphUtil.getURI(vertex);
 		URI resolvedProxyURI = uriHandler.resolve(vertexURI);
-		
+
 		if (!isResolveProxies) {
 			eObject = resource.getResourceSet().getEObject(resolvedProxyURI, true);
 		} else {
 			eObject = createEObject(vertex, resource.getResourceSet());
 		}
-		
+
 		return eObject;
 	}
 
@@ -198,51 +202,75 @@ public class GraphInputStream extends InputStream implements Loadable {
 		if (!attribute.isTransient() && vertex.getPropertyKeys().contains(attribute.getName())) {
 
 			Object rawValue = vertex.getProperty(attribute.getName());
-			Object value = EcoreUtil.createFromString(attribute.getEAttributeType(), (String) rawValue);
 
-			object.eSet(attribute, value);
+			if (attribute.isMany()) {
+				ArrayList<Object> values = new ArrayList<Object>();
+				EDataType eDataType = attribute.getEAttributeType();
+
+				if (rawValue.getClass().isArray()) {
+					Object[] objects = (Object[]) rawValue;
+
+					for (Object o: objects) {
+						values.add(EcoreUtil.createFromString(eDataType, o.toString()));
+					}
+
+				} else if (rawValue.getClass().isAssignableFrom(Collection.class)) {
+					Collection<?> objects = (Collection<?>) rawValue;
+
+					for (Object o: objects) {
+						values.add(EcoreUtil.createFromString(eDataType, o.toString()));
+					}
+				}
+
+				object.eSet(attribute, values);
+
+			} else {
+				object.eSet(attribute, EcoreUtil.createFromString(attribute.getEAttributeType(), rawValue.toString()));
+			}
 		}
 	}
 
 	protected EObject createEObject(Vertex vertex, ResourceSet resourceSet) {
-		final Object eClassURI = vertex.getProperty(Tokens.BLUEPRINTS_EMF_ECLASS);
-		if (eClassURI == null) {
-			return null;
-		}
-		
-		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI(eClassURI.toString()), true);
-		
-		if (eClass == null) {
-			return null;
-		}
-		
-		return EcoreUtil.create(eClass);
+			final Object eClassURI = vertex.getProperty(Tokens.BLUEPRINTS_EMF_ECLASS);
+			if (eClassURI == null) {
+				return null;
+			}
+
+			EClass eClass = (EClass) resourceSet.getEObject(URI.createURI(eClassURI.toString()), true);
+
+			if (eClass == null) {
+				return null;
+			}
+
+			return EcoreUtil.create(eClass);
 	}
 
 	protected Iterable<Vertex> findRootVertex(Resource resource) {
 		Iterable<Vertex> vertices = vertexIndex.get(Tokens.RESOURCE_URI, resource.getURI().toString());
-		
+
 		if (vertices == null || !vertices.iterator().hasNext())
 			vertices = graph.getVertices();
-		
+
 		Collection<Vertex> roots = new ArrayList<Vertex>();
-		
+
 		for (Vertex vertex: vertices) {
 			URI vertexURI = GraphUtil.getURI(vertex);
+
 			if (vertexURI != null) {
-				if (vertexURI.equals(resource.getURI().appendFragment("/"))){
+				if (vertexURI.equals(resource.getURI().appendFragment("/"))) {
 					roots.add(vertex);
 				} else {
 					if (vertexURI.hasFragment()) {
 						String fragment = vertexURI.fragment();
 						String[] fragments = fragment.split("/");
-						if (fragments.length == 0)
+						if (fragments.length  < 2) {
 							roots.add(vertex);
+						}
 					}
 				}
 			}
 		}
-		
+
 		return roots.isEmpty() ? vertices : roots; 
 	}
 	@Override
