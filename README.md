@@ -8,7 +8,7 @@ Current version is 0.1.0.
 
 ### Installation
 
-see [wiki](https://github.com/ghillairet/blueprints-emf/wiki/installation)
+See [wiki](https://github.com/ghillairet/blueprints-emf/wiki/installation)
 
 ### Usage
 
