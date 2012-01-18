@@ -2,19 +2,28 @@ Blueprints EMF, EMF Models in Graph DBs.
 
 Current version is 0.1.0.
 
-# Dependencies
+### Dependencies
 
 * Blueprints 1.1 or later
 
-# Installation
+### Installation
 
-see [wiki](https://github.com/ghillairet/blueprints-emf/wiki/Install)
+see [wiki](https://github.com/ghillairet/blueprints-emf/wiki/installation)
 
-# Usage
+### Usage
 
-# News #
+		IndexableGraph graph = new TinkerGraph();
+		ResourceSet resourceSet = new ResourceSetImpl();
+		
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
+		
+		User user = ModelFactory.eINSTANCE.createUser();
+		user.setUserId("1");
+		user.setName("John");
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph:/my/graph/users"));
+		
+		resource.getContents().add(user);		
+		resource.save(null);
 
-Version 0.1.0 2011/3/11
-
-*    First implementation, provides URIHandler implementation for graph databases supporting blueprints.
-*    Basic read and write of emf models in blueprints data format.
