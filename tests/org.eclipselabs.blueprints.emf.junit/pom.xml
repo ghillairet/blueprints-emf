@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>blueprints-emf</artifactId>
+		<groupId>org.eclipselabs</groupId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.eclipselabs.blueprints.emf.junit</artifactId>
+	<packaging>eclipse-test-plugin</packaging>
+	
+<!-- 	<build> -->
+<!-- 		<plugins> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.eclipse.tycho</groupId> -->
+<!-- 				<artifactId>tycho-surefire-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<testSuite>/org.eclipselabs.blueprints.emf.junit/src/org/eclipselabs/blueprints/emf/junit/suite/TestEmfJsSuite.java</testSuite> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
+<!-- 		</plugins> -->
+<!-- 	</build> -->
+</project>
