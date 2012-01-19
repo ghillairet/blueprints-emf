@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipselabs.blueprints.emf.GraphURIHandlerImpl;
+import org.eclipselabs.blueprints.emf.impl.GraphURIHandlerImpl;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.util.Tokens;
 import org.junit.After;
