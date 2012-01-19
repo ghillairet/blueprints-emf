@@ -10,52 +10,26 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipselabs.blueprints.emf.GraphURIHandlerImpl;
+import org.eclipselabs.blueprints.emf.GraphURIHandler;
+import org.eclipselabs.blueprints.emf.impl.GraphURIHandlerImpl;
 import org.eclipselabs.example.socnet.Person;
 import org.eclipselabs.example.socnet.SocnetFactory;
 import org.eclipselabs.example.socnet.SocnetPackage;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
 
+import com.tinkerpop.blueprints.pgm.Edge;
 import com.tinkerpop.blueprints.pgm.IndexableGraph;
+import com.tinkerpop.blueprints.pgm.Vertex;
 import com.tinkerpop.blueprints.pgm.impls.neo4j.Neo4jGraph;
 
-public class Activator implements BundleActivator {
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		System.out.println("Start Neo4J Example");
-		
-		EPackage.Registry.INSTANCE.put(SocnetPackage.eNS_URI, SocnetPackage.eINSTANCE);
-		IndexableGraph graph = new Neo4jGraph("/data/neo4j/socnet");
-		
-		ResourceSet resourceSet = new ResourceSetImpl();
-		
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
-		
-		Person p = SocnetFactory.eINSTANCE.createPerson();
-		p.setName("John");
-		
-		Resource resource = resourceSet.createResource(URI.createURI("graph://data/neo4j/socnet/"));
-		resource.getContents().add(p);
-		
-		resource.save(null);
-		
-		System.out.println("Shutdown Neo4J");
-		graph.shutdown();
-		System.out.println("Neo4J down !!");
-	}
+public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("Start Neo4J Example");
 		
 		EPackage.Registry.INSTANCE.put(SocnetPackage.eNS_URI, SocnetPackage.eINSTANCE);
 		Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().put("graph", new XMIResourceFactoryImpl());
-		IndexableGraph graph = new Neo4jGraph("/data/neo4j/socnet");
+		IndexableGraph graph = new Neo4jGraph("data/neo4j/socnet");
+		GraphURIHandler.Registry.INSTANCE.put("graph://data/neo4j/socnet/", graph);
 		
 		ResourceSet resourceSet = new ResourceSetImpl();
 		
@@ -68,26 +42,37 @@ public class Activator implements BundleActivator {
 		Person paul = SocnetFactory.eINSTANCE.createPerson();
 		paul.setName("Paul");
 		
+		Person andre = SocnetFactory.eINSTANCE.createPerson();
+		andre.setName("Andre");
+		
+		Person benoit = SocnetFactory.eINSTANCE.createPerson();
+		benoit.setName("Benoit");
+		
 		john.getFriends().add(paul);
+		paul.getFriends().add(benoit);
+		john.getFriends().add(andre);
+		andre.getFriends().add(benoit);
 		
 		Resource resource = resourceSet.createResource(URI.createURI("graph://data/neo4j/socnet/"));
 		resource.getContents().add(john);
 		resource.getContents().add(paul);
+		resource.getContents().add(andre);
+		resource.getContents().add(benoit);
 		
 		resource.save(null);
 		
-		System.out.println(graph.getVertices().iterator().hasNext());
+		System.out.println("Created vertices:");
+		for (Vertex v: graph.getVertices()){
+			System.out.println("    "+v+": "+v.getProperty("name"));
+		}
+		System.out.println("and edges:");
+		for (Edge e: graph.getEdges()) {
+			System.out.println("    "+e);
+		}
+		
 		System.out.println("Shutdown Neo4J");
 		graph.shutdown();
 		System.out.println("Neo4J down !!");	
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		System.out.println("Goodbye !!");
-	}
-
 }
