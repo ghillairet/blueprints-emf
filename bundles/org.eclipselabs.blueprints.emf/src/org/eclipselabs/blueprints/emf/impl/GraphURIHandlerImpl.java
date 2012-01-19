@@ -8,7 +8,7 @@
  * Contributors:
  *    Guillaume Hillairet - initial API and implementation
  *******************************************************************************/
-package org.eclipselabs.blueprints.emf;
+package org.eclipselabs.blueprints.emf.impl;
 
 import static org.eclipselabs.blueprints.emf.util.GraphUtil.getEdgeIndex;
 import static org.eclipselabs.blueprints.emf.util.GraphUtil.getVertexIndex;
@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
+import org.eclipselabs.blueprints.emf.GraphURIHandler;
 import org.eclipselabs.blueprints.emf.internal.GraphInputStream;
 import org.eclipselabs.blueprints.emf.internal.GraphOutputStream;
 
@@ -29,47 +30,79 @@ import com.tinkerpop.blueprints.pgm.IndexableGraph;
  * 
  * @author ghillairet
  */
-public class GraphURIHandlerImpl extends URIHandlerImpl {
+public class GraphURIHandlerImpl extends URIHandlerImpl implements GraphURIHandler {
 	
 	protected IndexableGraph graph;
-	protected final String scheme;
-	protected final String authority;
-
+	
 //	public GraphURIHandlerImpl() {
 //		Activator.getInstance(); // TODO
 //	}
 	
 	public GraphURIHandlerImpl(IndexableGraph graph) {
-		this(graph, null, null);
-	}
-	
-	public GraphURIHandlerImpl(IndexableGraph graph, String scheme, String authority) {
 		this.graph = graph;
-		this.scheme = scheme;
-		this.authority = authority;
 	}
 	
 	@Override
 	public boolean canHandle(URI uri) {
-		if (scheme != null)
-			if (authority != null)
-				return uri.scheme().equalsIgnoreCase(scheme) && uri.authority().equalsIgnoreCase(authority);
-			else
-				return uri.scheme().equalsIgnoreCase(scheme);
-		else
-			return uri.scheme().equalsIgnoreCase("graph");
+		if (uri.scheme().equalsIgnoreCase("graph"))
+			return Registry.INSTANCE.containsURI(uri);
+		return false;
 	}
 	
 	@Override
 	public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException {
-		return new GraphInputStream(graph, getVertexIndex(graph), getEdgeIndex(graph), options);	
+		final IndexableGraph graph = Registry.INSTANCE.getGraph(uri);
+		if (graph == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		InputStream inStream = null;
+		try {
+			inStream = new GraphInputStream(graph, getVertexIndex(graph), getEdgeIndex(graph), options);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return inStream;
 	}
 	
 	@Override
 	public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException {
-		return new GraphOutputStream(graph, getVertexIndex(graph), getEdgeIndex(graph), options);
+		final IndexableGraph graph = Registry.INSTANCE.getGraph(uri);
+		if (graph == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		OutputStream outStream = null;
+		try {
+			outStream = new GraphOutputStream(graph, getVertexIndex(graph), getEdgeIndex(graph), options);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return outStream;
 	}
 	
-	public static final String USE_ID_ATTRIBUTE_AS_KEY = "USE_ID_ATTRIBUTE_AS_KEY";
-	public static final String EXTRINSIC_ID_KEY = "EXTRINSIC_ID_KEY"; 
+	@Override
+	public void delete(URI uri, Map<?, ?> options) throws IOException {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public boolean exists(URI uri, Map<?, ?> options) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Map<String, ?> getAttributes(URI uri, Map<?, ?> options) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setAttributes(URI uri, Map<String, ?> attributes, Map<?, ?> options) throws IOException {
+		// TODO Auto-generated method stub
+	}
+	
 }
