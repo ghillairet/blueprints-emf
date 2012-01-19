@@ -2,7 +2,7 @@
 
 To run the example
     
-    $ git clone git@github.com:ghillairet/blueprints-emf.git
+    $ git clone git://github.com/ghillairet/blueprints-emf.git
     
     $ cd blueprints-emf/examples/blueprints-emf.neo4j.example
     
