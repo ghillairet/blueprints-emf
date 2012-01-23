@@ -1,4 +1,4 @@
-Blueprints EMF, EMF Models in Graph DBs.
+Blueprints EMF, [EMF](http://www.eclipse.org/emf) Models in Graph DBs.
 
 Current version is 0.1.0.
 
