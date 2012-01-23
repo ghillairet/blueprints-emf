@@ -21,6 +21,7 @@ Import-Package: com.tinkerpop.blueprints.pgm,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.emf.ecore.xmi.util,
  org.eclipselabs.blueprints.emf,
+ org.eclipselabs.blueprints.emf.impl,
  org.eclipselabs.blueprints.emf.util,
  org.junit;version="4.8.2",
  org.junit.runner;version="4.8.2",
@@ -34,4 +35,5 @@ Export-Package: org.eclipselabs.blueprints.emf.junit,
  org.eclipselabs.blueprints.emf.junit.suite,
  org.eclipselabs.blueprints.emf.junit.support,
  org.eclipselabs.blueprints.emf.junit.tests
-Require-Bundle: org.eclipse.emf.ecore
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipselabs.blueprints.emf;bundle-version="0.1.0"

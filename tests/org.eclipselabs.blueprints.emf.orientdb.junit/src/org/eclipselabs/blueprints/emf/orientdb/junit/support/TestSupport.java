@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipselabs.blueprints.emf.GraphURIHandler;
 import org.eclipselabs.blueprints.emf.impl.GraphURIHandlerImpl;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.util.Tokens;
@@ -47,10 +48,12 @@ public class TestSupport {
 
 		graph = new OrientGraph("local:/tmp/orient/tests");
 		
+		GraphURIHandler.Registry.INSTANCE.put("graph:/tmp/test", graph);
+		
 		resourceSet = new ResourceSetImpl();
-
+		
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
+		uriHandlers.add(0, new GraphURIHandlerImpl());
 	}
 	
 }

@@ -32,15 +32,7 @@ import com.tinkerpop.blueprints.pgm.IndexableGraph;
  */
 public class GraphURIHandlerImpl extends URIHandlerImpl implements GraphURIHandler {
 	
-	protected IndexableGraph graph;
-	
-//	public GraphURIHandlerImpl() {
-//		Activator.getInstance(); // TODO
-//	}
-	
-	public GraphURIHandlerImpl(IndexableGraph graph) {
-		this.graph = graph;
-	}
+	public GraphURIHandlerImpl() {}
 	
 	@Override
 	public boolean canHandle(URI uri) {
@@ -53,7 +45,7 @@ public class GraphURIHandlerImpl extends URIHandlerImpl implements GraphURIHandl
 	public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException {
 		final IndexableGraph graph = Registry.INSTANCE.getGraph(uri);
 		if (graph == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Cannot find graph for URI "+uri+", please register a graph using GraphURIHandler.Registry.");
 		}
 		
 		InputStream inStream = null;
@@ -70,7 +62,7 @@ public class GraphURIHandlerImpl extends URIHandlerImpl implements GraphURIHandl
 	public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException {
 		final IndexableGraph graph = Registry.INSTANCE.getGraph(uri);
 		if (graph == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Cannot find graph for URI "+uri+", please register a graph using GraphURIHandler.Registry.");
 		}
 		
 		OutputStream outStream = null;

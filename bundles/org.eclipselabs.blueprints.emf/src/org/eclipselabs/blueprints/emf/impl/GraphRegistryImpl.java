@@ -26,7 +26,13 @@ public class GraphRegistryImpl extends HashMap<String, IndexableGraph> implement
 
 	@Override
 	public IndexableGraph getGraph(URI uri) {
-		return get(uri.toString());
+		URI key = uri;
+		if (key.hasFragment())
+			key = key.trimFragment();
+		if (key.hasQuery())
+			key = key.trimQuery();
+		
+		return get(key.toString());
 	}
 
 	@Override

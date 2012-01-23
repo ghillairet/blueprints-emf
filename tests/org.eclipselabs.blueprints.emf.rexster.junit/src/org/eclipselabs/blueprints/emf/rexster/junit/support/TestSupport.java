@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipselabs.blueprints.emf.GraphURIHandler;
 import org.eclipselabs.blueprints.emf.impl.GraphURIHandlerImpl;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.junit.Before;
@@ -37,11 +38,12 @@ public class TestSupport {
 		
 		graph = new RexsterGraph(baseURI);
 //		options.put(Tokens.BLUEPRINTS_OBJECT_GRAPH, graph);
+		GraphURIHandler.Registry.INSTANCE.put(baseURI, graph);
 		
 		resourceSet = new ResourceSetImpl();
 //		resourceSet.getLoadOptions().putAll(options);
 		
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
+		uriHandlers.add(0, new GraphURIHandlerImpl());
 	}
 }

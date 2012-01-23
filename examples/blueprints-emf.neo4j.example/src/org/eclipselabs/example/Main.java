@@ -34,7 +34,7 @@ public class Main {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
+		uriHandlers.add(0, new GraphURIHandlerImpl());
 		
 		Person john = SocnetFactory.eINSTANCE.createPerson();
 		john.setName("John");
