@@ -25,8 +25,8 @@ import org.eclipselabs.blueprints.emf.util.Tokens;
 import org.junit.After;
 import org.junit.Before;
 
-import com.tinkerpop.blueprints.pgm.IndexableGraph;
-import com.tinkerpop.blueprints.pgm.impls.orientdb.OrientGraph;
+import com.tinkerpop.blueprints.IndexableGraph;
+import com.tinkerpop.blueprints.impls.orientdb.OrientGraph;
 
 public class TestSupport {
 

@@ -24,7 +24,7 @@ import org.eclipselabs.blueprints.emf.junit.model.TargetObject;
 import org.eclipselabs.blueprints.emf.junit.support.TestSupport;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Vertex;
 
 public class TestSaveLoadBenchMark extends TestSupport {
 
@@ -45,11 +45,16 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			parent.getMultipleContainmentReferenceNoProxies().add(child);
 		}
 		
+		long end = (System.currentTimeMillis() - start);
+		System.out.println("Created 101 objects in "+end/1000.+" s.");
+		
 		Resource resource = resourceSet.createResource(URI.createURI("graph://test/hundreds"));
 		resource.getContents().add(parent);
+		
+		start = System.currentTimeMillis();
 		resource.save(options);
 		
-		long end = (System.currentTimeMillis() - start);
+		end = (System.currentTimeMillis() - start);
 		
 		System.out.println("Save 101 objects in "+end/1000.+" s.");
 		
@@ -59,7 +64,7 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			count++;
 		}
 		
-		assertEquals(101, count);
+		assertEquals(102, count);
 	}
 	
 	@Test
@@ -79,11 +84,16 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			parent.getMultipleContainmentReferenceNoProxies().add(child);
 		}
 		
+		long end = (System.currentTimeMillis() - start);
+		System.out.println("Created 1001 objects in "+end/1000.+" s.");
+		
 		Resource resource = resourceSet.createResource(URI.createURI("graph://test/thousands"));
 		resource.getContents().add(parent);
+		start = System.currentTimeMillis();
+		
 		resource.save(options);
 		
-		long end = (System.currentTimeMillis() - start);
+		end = (System.currentTimeMillis() - start);
 		
 		System.out.println("Save 1001 objects in "+end/1000.+" s.");
 		
@@ -93,7 +103,7 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			count++;
 		}
 		
-		assertEquals(1001, count);
+		assertEquals(1002, count);
 	}
 	
 	@Test
@@ -127,6 +137,6 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			count++;
 		}
 		
-		assertEquals(100001, count);
+		assertEquals(100002, count);
 	}
 }

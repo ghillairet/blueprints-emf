@@ -12,21 +12,22 @@ package org.eclipselabs.blueprints.emf.junit.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipselabs.blueprints.emf.junit.model.ModelFactory;
-import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.junit.model.Node;
 import org.eclipselabs.blueprints.emf.junit.support.TestSupport;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
-import org.eclipselabs.blueprints.emf.util.Tokens;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Edge;
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Vertex;
 
 public class TestResourceProxies extends TestSupport {
 	
@@ -52,19 +53,19 @@ public class TestResourceProxies extends TestSupport {
 		Vertex firstVertex = GraphUtil.getVertex(firstNode, graph);
 		Vertex secondVertex = GraphUtil.getVertex(secondNode, graph);
 		
-		System.out.println(firstVertex.getProperty(Tokens.BLUEPRINTS_EMF_PROXY_URI));
-		System.out.println(secondVertex.getProperty(Tokens.BLUEPRINTS_EMF_PROXY_URI));
-		
 		assertNotNull(firstVertex);
 		assertNotNull(secondVertex);
 		
 		assertEquals("a", firstVertex.getProperty("name"));
 		assertEquals("b", secondVertex.getProperty("name"));
 		
-		Edge edge = GraphUtil.getEdge(GraphUtil.getEdgeID(firstNode, secondNode, ModelPackage.eINSTANCE.getNode_OneRefNode()), graph);
+		Iterable<Edge> edges = firstVertex.getEdges(Direction.OUT, "oneRefNode");
+		Iterator<Edge> it = edges.iterator();
 		
-		assertNotNull(edge);
+		assertTrue(it.hasNext());
+		Edge edge = it.next();
+		Vertex v = edge.getVertex(Direction.IN);
 		
-		System.out.println(edge);
+		assertEquals(secondVertex, v);
 	}
 }

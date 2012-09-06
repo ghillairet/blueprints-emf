@@ -10,30 +10,27 @@
  *******************************************************************************/
 package org.eclipselabs.blueprints.emf.junit.tests;
 
-import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_ECLASS;
-import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_INDEX_KEY;
-import static org.eclipselabs.blueprints.emf.util.Tokens.RESOURCE_URI;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.blueprints.emf.junit.model.ETypes;
 import org.eclipselabs.blueprints.emf.junit.model.ModelFactory;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.junit.model.User;
 import org.eclipselabs.blueprints.emf.junit.support.TestSupport;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
+import org.eclipselabs.blueprints.emf.util.PropertyKind;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Vertex;
 
 /**
  * 
@@ -48,7 +45,7 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 		user.setUserId("1");
 		user.setName("John");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		
 		resource.getContents().add(user);		
@@ -57,7 +54,6 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 		assertTrue(graph.getVertices().iterator().hasNext());
 		
 		Vertex vertex = GraphUtil.getVertex(user, graph);
-		
 		assertNotNull(vertex);
 		
 		assertNotNull(vertex.getProperty("userId"));
@@ -68,7 +64,6 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 		assertEquals("John", vertex.getProperty("name"));
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void testSaveObjectWithManyValueAttribute() throws IOException {
 		ETypes e = ModelFactory.eINSTANCE.createETypes();
@@ -76,7 +71,7 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 		e.getEStrings().add("two");
 		e.getEStrings().add("three");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		
 		resource.getContents().add(e);		
@@ -84,23 +79,59 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 		
 		Vertex v = GraphUtil.getVertex(e, graph);
 		assertNotNull(v);
+
+		assertTrue(v.getProperty("eStrings").getClass().isArray());
+		Object[] array = (Object[]) v.getProperty("eStrings");
 		
-		assertTrue(v.getProperty("eStrings") instanceof List);
-		assertEquals("one", ((List)v.getProperty("eStrings")).get(0));
-		assertEquals("two", ((List)v.getProperty("eStrings")).get(1));
-		assertEquals("three", ((List)v.getProperty("eStrings")).get(2));
+		assertEquals(3, array.length);
+		assertEquals("one", array[0]);
+		assertEquals("two", array[1]);
+		assertEquals("three", array[2]);
+	}
+	
+	@Test
+	public void testLoadObjectWithManyValueAttribute() throws IOException {
+		ETypes e = ModelFactory.eINSTANCE.createETypes();
+		e.getEStrings().add("one");
+		e.getEStrings().add("two");
+		e.getEStrings().add("three");
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
+		assertNotNull(resource);
+		
+		resource.getContents().add(e);		
+		resource.save(options);
+		
+		resource.unload();
+		assertTrue(resource.getContents().isEmpty());
+		
+		resource.load(null);
+		
+		assertEquals(1, resource.getContents().size());
+		
+		EObject root = resource.getContents().get(0);
+		assertTrue(root instanceof ETypes);
+		
+		EList<String> strings = ((ETypes)root).getEStrings();
+		assertNotNull(strings);
+		assertEquals(3, strings.size());
+		assertEquals("one", strings.get(0));
+		assertEquals("two", strings.get(1));
+		assertEquals("three", strings.get(2));
 	}
 	
 	@Test
 	public void testLoadOneObjectWithTwoAttributes() throws IOException {
-		Vertex v1 = graph.addVertex(null);
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, GraphUtil.safeURI(URI.createURI("graph:/tmp/test#1")));
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v1.setProperty(RESOURCE_URI, "graph:/tmp/test");
+		Vertex v = graph.addVertex(null);
+		v.setProperty(PropertyKind.eResource.toString(), "graph://tmp/test");
+		
+		Vertex v1 = createVertex("graph://tmp/test#1", ModelPackage.Literals.USER);
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		graph.addEdge(null, v, v1, PropertyKind.eContent.toString());
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		resource.load(options);
 		
@@ -118,21 +149,21 @@ public class TestBlueprintsEmfAttributes extends TestSupport {
 	public void testLoadTwoRootObjectWithTwoAttributes() throws IOException {
 		assertFalse(graph.getVertices().iterator().hasNext());
 		
-		Vertex v1 = graph.addVertex(null);
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, GraphUtil.safeURI(URI.createURI("graph:/tmp/test#1")));
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v1.setProperty(RESOURCE_URI, "graph:/tmp/test");
+		Vertex v = graph.addVertex(null);
+		v.setProperty(PropertyKind.eResource.toString(), "graph://tmp/test");
+		
+		Vertex v1 = createVertex("graph://tmp/test#1", ModelPackage.Literals.USER);
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
 		
-		Vertex v2 = graph.addVertex(null);
-		v2.setProperty(BLUEPRINTS_EMF_INDEX_KEY, GraphUtil.safeURI(URI.createURI("graph:/tmp/test#2")));
-		v2.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v2.setProperty(RESOURCE_URI, "graph:/tmp/test");
+		Vertex v2 = createVertex("graph://tmp/test#2", ModelPackage.Literals.USER);
 		v2.setProperty("userId", "2");
 		v2.setProperty("name", "Paul");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		graph.addEdge(null, v, v1, PropertyKind.eContent.toString());
+		graph.addEdge(null, v, v2, PropertyKind.eContent.toString());
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		assertFalse(resource.isLoaded());
 		assertTrue(resource.getContents().isEmpty());

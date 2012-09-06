@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipselabs.blueprints.emf.junit.tests;
 
-import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_INDEX_KEY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -26,11 +25,13 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipselabs.blueprints.emf.junit.model.Node;
 import org.eclipselabs.blueprints.emf.junit.support.TestSupport;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
+import org.eclipselabs.blueprints.emf.util.PropertyKind;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Edge;
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Vertex;
 
 public class TestObjectID extends TestSupport {
 	
@@ -81,18 +82,18 @@ public class TestObjectID extends TestSupport {
 		Vertex a = GraphUtil.getVertex(root, graph);
 		
 		assertEquals("a", a.getProperty("name"));
-		assertEquals(GraphUtil.safeURI(EcoreUtil.getURI(root)), a.getProperty(BLUEPRINTS_EMF_INDEX_KEY));
+		assertEquals(EcoreUtil.getURI(root).toString(), a.getProperty(PropertyKind.eURI.toString()));
 		
-		for (Edge edge: a.getOutEdges("children")) {
-			Vertex v = edge.getInVertex();
+		for (Edge edge: a.getEdges(Direction.OUT, "children")) {
+			Vertex v = edge.getVertex(Direction.IN);
 			assertEquals("b", v.getProperty("name"));
-			assertEquals(GraphUtil.safeURI(EcoreUtil.getURI(((Node)root).getChildren().get(0))), v.getProperty(BLUEPRINTS_EMF_INDEX_KEY));
+			assertEquals(EcoreUtil.getURI(((Node)root).getChildren().get(0)).toString(), v.getProperty(PropertyKind.eURI.toString()));
 		}
 		
-		for (Edge edge: a.getOutEdges("oneRefNode")) {
-			Vertex v = edge.getInVertex();
+		for (Edge edge: a.getEdges(Direction.OUT, "oneRefNode")) {
+			Vertex v = edge.getVertex(Direction.IN);
 			assertEquals("e", v.getProperty("name"));
-			assertEquals(GraphUtil.safeName("graph://nodes/#//@children.0/@children.0/@children.0/@children.0"), v.getProperty(BLUEPRINTS_EMF_INDEX_KEY));
+			assertEquals("graph://nodes/#//@children.0/@children.0/@children.0/@children.0", v.getProperty(PropertyKind.eURI.toString()));
 		}
 		
 	}
@@ -105,12 +106,7 @@ public class TestObjectID extends TestSupport {
 		resource.load(options);
 		assertFalse(resource.getContents().isEmpty());
 		assertEquals(1, resource.getContents().size());
-		
-//		Resource nodes = new XMIResourceImpl();
-//		nodes.getContents().addAll(resource.getContents());
-//		nodes.setURI(URI.createURI("tests/out-1.xmi"));
-//		nodes.save(null);
-		
+				
 		EObject root = resource.getEObject("/");
 		
 		assertTrue(root instanceof Node);

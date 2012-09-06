@@ -24,7 +24,7 @@ import org.eclipselabs.blueprints.emf.junit.model.TargetObject;
 import org.eclipselabs.blueprints.emf.neo4j.junit.support.TestSupport;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Vertex;
 
 public class TestSaveLoadBenchMark extends TestSupport {
 
@@ -45,11 +45,16 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			parent.getMultipleContainmentReferenceNoProxies().add(child);
 		}
 		
+		long end = (System.currentTimeMillis() - start);
+		System.out.println("Created 101 objects in "+end/1000.+" s.");
+		
 		Resource resource = resourceSet.createResource(URI.createURI("graph://test/hundreds"));
 		resource.getContents().add(parent);
+		
+		start = System.currentTimeMillis();
 		resource.save(options);
 		
-		long end = (System.currentTimeMillis() - start);
+		end = (System.currentTimeMillis() - start);
 		
 		System.out.println("Save 101 objects in "+end/1000.+" s.");
 		
@@ -59,10 +64,10 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			count++;
 		}
 		
-		assertEquals(101, count);
+		assertEquals(102, count);
 	}
 	
-//	@Test
+	@Test
 	public void testSaveThousands() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
@@ -93,10 +98,10 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			count++;
 		}
 		
-		assertEquals(1001, count);
+		assertEquals(1002, count);
 	}
 	
-//	@Test
+	@Test
 	public void testSaveHundredThousands() throws IOException {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
@@ -107,7 +112,7 @@ public class TestSaveLoadBenchMark extends TestSupport {
 		parent.setIdAttribute("0");
 		parent.setName("parent");
 		
-		for (int i=0;i<100000;i++) {
+		for (int i=0;i<10000;i++) {
 			TargetObject child = ModelFactory.eINSTANCE.createTargetObject();
 			child.setSingleAttribute("child"+i);
 			parent.getMultipleContainmentReferenceNoProxies().add(child);
@@ -119,7 +124,7 @@ public class TestSaveLoadBenchMark extends TestSupport {
 		
 		long end = (System.currentTimeMillis() - start);
 		
-		System.out.println("Save 100001 objects in "+end/1000.+" s.");
+		System.out.println("Save 10001 objects in "+end/1000.+" s.");
 		
 		int count = 0;
 		for (Iterator<Vertex> it = graph.getVertices().iterator(); it.hasNext();) {
@@ -127,6 +132,6 @@ public class TestSaveLoadBenchMark extends TestSupport {
 			count++;
 		}
 		
-		assertEquals(100001, count);
+		assertEquals(10002, count);
 	}
 }

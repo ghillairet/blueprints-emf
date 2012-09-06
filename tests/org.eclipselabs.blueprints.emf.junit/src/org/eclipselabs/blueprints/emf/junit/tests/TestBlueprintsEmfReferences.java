@@ -10,30 +10,29 @@
  *******************************************************************************/
 package org.eclipselabs.blueprints.emf.junit.tests;
 
-import static org.eclipselabs.blueprints.emf.util.GraphUtil.safeName;
-import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_ECLASS;
-import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_INDEX_KEY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.blueprints.emf.junit.model.ModelFactory;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.junit.model.Node;
 import org.eclipselabs.blueprints.emf.junit.model.User;
 import org.eclipselabs.blueprints.emf.junit.support.TestSupport;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
+import org.eclipselabs.blueprints.emf.util.PropertyKind;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Edge;
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Vertex;
 
 public class TestBlueprintsEmfReferences extends TestSupport {
 	
@@ -52,7 +51,7 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		
 		user1.getFriends().add(user2);
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		
 		resource.getContents().add(user1);
@@ -60,12 +59,14 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		
 		resource.save(options);
 		
-		assertNotNull(GraphUtil.getVertex(user1, graph));
-		assertNotNull(GraphUtil.getVertex(user2, graph));
+		Vertex v1 = GraphUtil.getVertex(user1, graph);
+		Vertex v2 = GraphUtil.getVertex(user2, graph);
 		
-		String edgeID = GraphUtil.getEdgeID(user1, user2, ModelPackage.eINSTANCE.getUser_Friends());
-		
-		assertNotNull(GraphUtil.getEdge(edgeID, graph));
+		Iterable<Edge> edges = v1.getEdges(Direction.OUT, "friends");
+		Iterator<Edge> it = edges.iterator();
+		assertTrue(it.hasNext());
+		assertEquals(it.next().getVertex(Direction.IN), v2);
+		assertFalse(it.hasNext());
 	}
 	
 	@Test
@@ -82,13 +83,13 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		user2.setName("Paul");
 		
 		User user3 = ModelFactory.eINSTANCE.createUser();
-		user2.setUserId("3");
-		user2.setName("Henry");
+		user3.setUserId("3");
+		user3.setName("Henry");
 		
 		user1.getFriends().add(user2);
 		user1.getFriends().add(user3);
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		
 		resource.getContents().add(user1);
@@ -97,12 +98,27 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		
 		resource.save(options);
 		
-		assertNotNull(GraphUtil.getVertex(user1, graph));
-		assertNotNull(GraphUtil.getVertex(user2, graph));
-		assertNotNull(GraphUtil.getVertex(user3, graph));
+		Vertex v1 = GraphUtil.getVertex(user1, graph);
+		Vertex v2 = GraphUtil.getVertex(user2, graph);
+		Vertex v3 = GraphUtil.getVertex(user3, graph);
 		
-		assertNotNull(GraphUtil.getEdge(GraphUtil.getEdgeID(user1, user2, ModelPackage.eINSTANCE.getUser_Friends()), graph));
-		assertNotNull(GraphUtil.getEdge(GraphUtil.getEdgeID(user1, user3, ModelPackage.eINSTANCE.getUser_Friends()), graph));
+		assertNotNull(v1);
+		assertNotNull(v2);
+		assertNotNull(v3);
+		
+		Iterable<Edge> edges = v1.getEdges(Direction.OUT, "friends");
+		Iterator<Edge> it = edges.iterator();
+		assertTrue(it.hasNext());
+		
+		Vertex next = it.next().getVertex(Direction.IN);
+		
+		assertTrue(next.equals(v2) || next.equals(v3));
+		assertTrue(it.hasNext());
+		
+		next = it.next().getVertex(Direction.IN);
+		
+		assertTrue(next.equals(v2) || next.equals(v3));
+		assertFalse(it.hasNext());
 	}
 	
 	@Test
@@ -110,21 +126,21 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
 		
-		Vertex v1 = graph.addVertex(null);
+		Vertex v = createResourceVertex("graph://tmp/test");
+		
+		Vertex v1 = createVertex("graph://tmp/test#1", ModelPackage.Literals.USER);
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, safeName("graph:/tmp/test#1"));
 		
-		Vertex v2 = graph.addVertex(null);
+		Vertex v2 = createVertex("graph://tmp/test#2", ModelPackage.Literals.USER);
 		v2.setProperty("userId", "2");
 		v2.setProperty("name", "Paul");
-		v2.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v2.setProperty(BLUEPRINTS_EMF_INDEX_KEY, safeName("graph:/tmp/test#2"));
 		
 		graph.addEdge(null, v1, v2, "friends");
+		graph.addEdge(null, v, v1, "_eContent");
+		graph.addEdge(null, v, v2, "_eContent");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		resource.load(options);
 		
@@ -146,7 +162,7 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		
 		assertEquals(1, u1.getFriends().size());
 		assertEquals(0, u2.getFriends().size());
-		
+				
 		assertTrue(u1.getFriends().contains(u2));
 		
 		User friend = u1.getFriends().get(0);
@@ -158,31 +174,31 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
 		
-		Vertex v1 = graph.addVertex(null);
+		Vertex v = createResourceVertex("graph://tmp/test");
+		
+		Vertex v1 = createVertex("graph://tmp/test#1", ModelPackage.Literals.USER);
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, safeName("graph:/tmp/test#1"));
 		
-		Vertex v2 = graph.addVertex(null);
+		Vertex v2 = createVertex("graph://tmp/test#2", ModelPackage.Literals.USER);
 		v2.setProperty("userId", "2");
 		v2.setProperty("name", "Paul");
-		v2.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v2.setProperty(BLUEPRINTS_EMF_INDEX_KEY, safeName("graph:/tmp/test#2"));
 		
-		Vertex v3 = graph.addVertex(null);
+		Vertex v3 = createVertex("graph://tmp/test#3", ModelPackage.Literals.USER);
 		v3.setProperty("userId", "3");
 		v3.setProperty("name", "Jacques");
-		v3.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v3.setProperty(BLUEPRINTS_EMF_INDEX_KEY, safeName("graph:/tmp/test#3"));
 		
-		graph.addEdge(null, v1, v2, "friends");
-		graph.addEdge(null, v1, v3, "friends");
+		graph.addEdge(null, v1, v2, "friends").setProperty("_position", 0);
+		graph.addEdge(null, v1, v3, "friends").setProperty("_position", 1);;
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		graph.addEdge(null, v, v1, "_eContent");
+		graph.addEdge(null, v, v2, "_eContent");
+		graph.addEdge(null, v, v3, "_eContent");
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		resource.load(options);
-		
+				
 		assertEquals(3, resource.getContents().size());
 		
 		EObject obj1 = resource.getEObject("1");
@@ -221,16 +237,17 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		assertFalse(graph.getEdges().iterator().hasNext());
 		assertFalse(graph.getVertices().iterator().hasNext());
 		
-		GraphUtil.getVertexIndex(graph); // insure creation of index for vertex
+		Vertex v = createResourceVertex("graph://tmp/test");
 		
-		Vertex v1 = graph.addVertex(null);
+		Vertex v1 = createVertex("graph://tmp/test#1", ModelPackage.Literals.USER);
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()));
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, safeName("graph:/tmp/test#1"));
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test#1"));
+		graph.addEdge(null, v, v1, PropertyKind.eContent.toString());
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test#1"));
 		assertNotNull(resource);
+		
 		resource.load(options);
 		
 		assertEquals(1, resource.getContents().size());
@@ -266,7 +283,7 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		rootNode.getChildren().add(childNode2);
 		childNode1.getChildren().add(childNode11);
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test/nodes"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test/nodes"));
 		resource.getContents().add(rootNode);
 		
 		resource.save(null);
@@ -286,32 +303,36 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		assertEquals("child11", child11Vertex.getProperty("name"));
 		assertEquals("child2", child2Vertex.getProperty("name"));
 		
-		Iterable<Edge> edges = rootVertex.getOutEdges("children");
-		assertTrue(edges.iterator().hasNext());
+		Iterable<Edge> edges = rootVertex.getEdges(Direction.OUT, "children");
+		Iterator<Edge> it = edges.iterator();
 		
-		Edge edge1 = edges.iterator().next();
-		assertEquals(rootVertex, edge1.getOutVertex());
-		assertEquals(child1Vertex, edge1.getInVertex());
+		assertTrue(it.hasNext());
+		Edge edge1 = it.next();
+		
+		assertEquals(rootVertex, edge1.getVertex(Direction.OUT));
+		assertEquals(child1Vertex, edge1.getVertex(Direction.IN));
 		assertEquals("children", edge1.getLabel());
 		
-		assertTrue(edges.iterator().hasNext());
+		assertTrue(it.hasNext());
+		Edge edge2 = it.next();
 		
-		Edge edge2 = edges.iterator().next();
-		assertEquals(rootVertex, edge2.getOutVertex());
-		assertEquals(child2Vertex, edge2.getInVertex());
+		assertEquals(rootVertex, edge2.getVertex(Direction.OUT));
+		assertEquals(child2Vertex, edge2.getVertex(Direction.IN));
 		assertEquals("children", edge2.getLabel());
 		
-		assertFalse(edges.iterator().hasNext());
+		assertFalse(it.hasNext());
 		
-		Iterable<Edge> edges2 = child1Vertex.getOutEdges("children");
-		assertTrue(edges2.iterator().hasNext());
+		Iterable<Edge> edges2 = child1Vertex.getEdges(Direction.OUT, "children");
+		Iterator<Edge> it2 = edges2.iterator();
+		assertTrue(it2.hasNext());
 		
-		Edge edge11 = edges2.iterator().next();
-		assertEquals(child1Vertex, edge11.getOutVertex());
-		assertEquals(child11Vertex, edge11.getInVertex());
+		Edge edge11 = it2.next();
+		
+		assertEquals(child1Vertex, edge11.getVertex(Direction.OUT));
+		assertEquals(child11Vertex, edge11.getVertex(Direction.IN));
 		assertEquals("children", edge11.getLabel());
 
-		assertFalse(edges2.iterator().hasNext());
+		assertFalse(it2.hasNext());
 	}
 	
 	@Test
@@ -335,7 +356,7 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		rootNode.getChildren().add(childNode2);
 		childNode1.getChildren().add(childNode11);
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test/nodes"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test/nodes"));
 		resource.getContents().add(rootNode);
 		
 		resource.save(null);
@@ -346,13 +367,11 @@ public class TestBlueprintsEmfReferences extends TestSupport {
 		
 		resource.load(null);
 		
-		assertEquals(1, resource.getContents().size());
-		
 		EObject rootObject = resource.getContents().get(0);
 		
 		assertTrue(rootObject instanceof Node);
 		
-		Node root = (Node) resource.getContents().get(0);
+		Node root = (Node) rootObject;
 		
 		assertEquals(2, root.getChildren().size());
 		

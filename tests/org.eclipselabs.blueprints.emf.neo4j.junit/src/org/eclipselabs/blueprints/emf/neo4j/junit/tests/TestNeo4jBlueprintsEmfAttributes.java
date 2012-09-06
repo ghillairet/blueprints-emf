@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipselabs.blueprints.emf.neo4j.junit.tests;
 
-import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_ECLASS;
-import static org.eclipselabs.blueprints.emf.util.Tokens.BLUEPRINTS_EMF_INDEX_KEY;
-import static org.eclipselabs.blueprints.emf.util.Tokens.RESOURCE_URI;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -23,16 +20,16 @@ import java.io.IOException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.blueprints.emf.junit.model.ETypes;
 import org.eclipselabs.blueprints.emf.junit.model.ModelFactory;
 import org.eclipselabs.blueprints.emf.junit.model.ModelPackage;
 import org.eclipselabs.blueprints.emf.junit.model.User;
 import org.eclipselabs.blueprints.emf.neo4j.junit.support.TestSupport;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
+import org.eclipselabs.blueprints.emf.util.PropertyKind;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Vertex;
 
 public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 	
@@ -44,7 +41,7 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 		user.setUserId("1");
 		user.setName("John");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		
 		resource.getContents().add(user);		
@@ -73,7 +70,7 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 		e.getEStrings().add("two");
 		e.getEStrings().add("three");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		
 		resource.getContents().add(e);		
@@ -95,14 +92,15 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 	public void testLoadOneObjectWithTwoAttributes() throws IOException {
 		assertFalse(graph.getVertices().iterator().hasNext());
 		
-		Vertex v1 = graph.addVertex(null);
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, "graph:/tmp/test#1");
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()).toString());
-		v1.setProperty(RESOURCE_URI, "graph:/tmp/test");
+		Vertex v = createResourceVertex("graph://tmp/test");
+		
+		Vertex v1 = createVertex("graph://tmp/test#1", ModelPackage.Literals.USER);
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		graph.addEdge(null, v, v1, PropertyKind.eContent.toString());
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		resource.load(options);
 		
@@ -120,21 +118,20 @@ public class TestNeo4jBlueprintsEmfAttributes extends TestSupport {
 	public void testLoadTwoRootObjectWithTwoAttributes() throws IOException {
 		assertFalse(graph.getVertices().iterator().hasNext());
 		
-		Vertex v1 = graph.addVertex(null);
-		v1.setProperty(BLUEPRINTS_EMF_INDEX_KEY, "graph:/tmp/test#1");
-		v1.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()).toString());
-		v1.setProperty(RESOURCE_URI, "graph:/tmp/test");
+		Vertex v = createResourceVertex("graph://tmp/test");
+		
+		Vertex v1 = createVertex("graph://tmp/test#1", ModelPackage.Literals.USER);
 		v1.setProperty("userId", "1");
 		v1.setProperty("name", "John");
 		
-		Vertex v2 = graph.addVertex(null);
-		v2.setProperty(BLUEPRINTS_EMF_INDEX_KEY, "graph:/tmp/test#2");
-		v2.setProperty(BLUEPRINTS_EMF_ECLASS, EcoreUtil.getURI(ModelPackage.eINSTANCE.getUser()).toString());
-		v2.setProperty(RESOURCE_URI, "graph:/tmp/test");
+		Vertex v2 = createVertex("graph://tmp/test#2", ModelPackage.Literals.USER);
 		v2.setProperty("userId", "2");
 		v2.setProperty("name", "Paul");
 		
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/tmp/test"));
+		graph.addEdge(null, v, v1, PropertyKind.eContent.toString());
+		graph.addEdge(null, v, v2, PropertyKind.eContent.toString());
+		
+		Resource resource = resourceSet.createResource(URI.createURI("graph://tmp/test"));
 		assertNotNull(resource);
 		assertFalse(resource.isLoaded());
 		assertTrue(resource.getContents().isEmpty());

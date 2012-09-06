@@ -19,7 +19,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -33,7 +32,7 @@ import org.eclipselabs.blueprints.emf.junit.support.TestSupport;
 import org.eclipselabs.blueprints.emf.util.GraphUtil;
 import org.junit.Test;
 
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Vertex;
 
 public class TestOrientBlueprintsEmfAttributes extends TestSupport {
 
@@ -83,13 +82,13 @@ public class TestOrientBlueprintsEmfAttributes extends TestSupport {
 		Vertex v = GraphUtil.getVertex(e, graph);
 		assertNotNull(v);
 		
-		assertTrue(v.getProperty("eStrings") instanceof List);
-		List<?> array = (List<?>) v.getProperty("eStrings");
+		assertTrue(v.getProperty("eStrings").getClass().isArray());
+		Object[] array = (Object[]) v.getProperty("eStrings");
 		
-		assertEquals(3, array.size());
-		assertEquals("one", array.get(0));
-		assertEquals("two", array.get(1));
-		assertEquals("three", array.get(2));
+		assertEquals(3, array.length);
+		assertEquals("one", array[0]);
+		assertEquals("two", array[1]);
+		assertEquals("three", array[2]);
 	}
 	
 	@Test
