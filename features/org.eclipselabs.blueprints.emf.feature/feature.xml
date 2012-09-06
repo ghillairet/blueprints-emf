@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.blueprints.emf.feature"
       label="Blueprints EMF"
-      version="0.1.0.qualifier"
+      version="0.2.0.qualifier"
       provider-name="Eclipse Labs">
 
    <description url="http://www.example.com/description">
@@ -21,7 +21,7 @@
          id="org.eclipselabs.blueprints.emf"
          download-size="0"
          install-size="0"
-         version="0.1.0.qualifier"
+         version="0.2.0.qualifier"
          unpack="false"/>
 
 </feature>

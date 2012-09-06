@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Blueprints Neo4J Tests
 Bundle-SymbolicName: org.eclipselabs.blueprints.emf.neo4j.junit;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Labs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -11,21 +11,8 @@ Export-Package: org.eclipselabs.blueprints.emf.neo4j.junit,
  org.eclipselabs.blueprints.emf.neo4j.junit.support,
  org.eclipselabs.blueprints.emf.neo4j.junit.tests
 Bundle-ActivationPolicy: lazy
-Import-Package: com.tinkerpop.blueprints.pgm,
- com.tinkerpop.blueprints.pgm.impls.neo4j,
- com.tinkerpop.blueprints.pgm.impls.tg,
- org.eclipse.emf.common.notify,
- org.eclipse.emf.common.notify.impl,
- org.eclipse.emf.common.util,
- org.eclipse.emf.ecore,
- org.eclipse.emf.ecore.impl,
- org.eclipse.emf.ecore.plugin,
- org.eclipse.emf.ecore.resource,
- org.eclipse.emf.ecore.resource.impl,
- org.eclipse.emf.ecore.util,
- org.eclipse.emf.ecore.xmi,
- org.eclipse.emf.ecore.xmi.impl,
- org.eclipse.emf.ecore.xmi.util,
+Import-Package: com.tinkerpop.blueprints,
+ com.tinkerpop.blueprints.impls.neo4j,
  org.eclipselabs.blueprints.emf,
  org.eclipselabs.blueprints.emf.impl,
  org.eclipselabs.blueprints.emf.junit.model,
@@ -33,6 +20,18 @@ Import-Package: com.tinkerpop.blueprints.pgm,
  org.junit;version="4.8.2",
  org.junit.runner;version="4.8.2",
  org.junit.runners;version="4.8.2",
+ org.neo4j.graphdb,
+ org.neo4j.graphdb.factory,
+ org.neo4j.graphdb.index,
+ org.neo4j.index.lucene,
+ org.neo4j.kernel,
+ org.neo4j.tooling,
  org.osgi.framework;version="1.6.0"
-Require-Bundle: org.eclipse.emf.ecore
 Bundle-Activator: org.eclipselabs.blueprints.emf.neo4j.junit.Activator
+Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.8.0",
+ com.tinkerpop.blueprints;bundle-version="2.1.0",
+ com.tinkerpop.blueprints.neo4j;bundle-version="2.1.0",
+ org.neo4j.kernel;bundle-version="1.7.1",
+ org.neo4j.lucene.index;bundle-version="1.7.1",
+ org.eclipselabs.blueprints.emf;bundle-version="0.1.0",
+ org.eclipselabs.blueprints.emf.junit;bundle-version="0.1.0"

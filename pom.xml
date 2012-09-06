@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipselabs</groupId>
 	<artifactId>blueprints-emf</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -12,12 +12,12 @@
 		<module>features/org.eclipselabs.blueprints.emf.feature</module>
 		<module>tests/org.eclipselabs.blueprints.emf.junit</module>
 		<module>tests/org.eclipselabs.blueprints.emf.neo4j.junit</module>
-		<module>tests/org.eclipselabs.blueprints.emf.orientdb.junit</module>
+<!-- 		<module>tests/org.eclipselabs.blueprints.emf.orientdb.junit</module> -->
 		<module>build/repository</module>
 	</modules>
 
 	<properties>
-		<tycho-version>0.13.0</tycho-version>
+		<tycho-version>0.14.0</tycho-version>
 		<targets>build/repository/target/</targets>
 	</properties>
 
@@ -25,69 +25,21 @@
 		<repository>
 			<id>indigo</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/indigo</url>
+			<url>http://download.eclipse.org/releases/juno</url>
 		</repository>
 		<repository>
-			<id>tinkerpop-repository</id>
-			<name>TinkerPop Maven2 Repository</name>
-			<url>http://tinkerpop.com/maven2</url>
+			<id>p2</id>
+			<layout>p2</layout>
+			<url>http://ghillairet.github.com/p2</url>
 		</repository>
 		<repository>
-			<id>codehaus-snapshots</id>
-			<url>http://snapshots.repository.codehaus.org</url>
-		</repository>
-		<repository>
-			<id>orientechnologies-repository</id>
-			<name>Orient Technologies Maven2 Repository</name>
-			<url>http://www.orientechnologies.com/listing/m2</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
+			<id>orbit</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/tools/orbit/downloads/drops/S20120726065500/repository/</url>
 		</repository>
 	</repositories>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jettison</groupId>
-			<artifactId>jettison</artifactId>
-			<version>1.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tinkerpop.blueprints</groupId>
-			<artifactId>blueprints-core</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tinkerpop.blueprints</groupId>
-			<artifactId>blueprints-neo4j-graph</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tinkerpop.blueprints</groupId>
-			<artifactId>blueprints-orient-graph</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.neo4j</groupId>
-			<artifactId>neo4j-osgi-bundle</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.orientechnologies</groupId>
-			<artifactId>orient-commons</artifactId>
-			<version>1.0rc6</version>
-		</dependency>
-		<dependency>
-			<groupId>com.orientechnologies</groupId>
-			<artifactId>orientdb-core</artifactId>
-			<version>1.0rc6</version>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -105,7 +57,7 @@
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
-	
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-compiler-plugin</artifactId>
@@ -134,7 +86,7 @@
 						<artifact>
 							<groupId>org.eclipselabs</groupId>
 							<artifactId>blueprints-emf</artifactId>
-							<version>0.1.0-SNAPSHOT</version>
+							<version>0.2.0-SNAPSHOT</version>
 							<classifier>build/target/blueprints-emf</classifier>
 						</artifact>
 					</target>
@@ -147,7 +99,7 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<argLine>-Xmx1024m</argLine>
+					<argLine>-server -Xmx512M -XX:+UseConcMarkSweepGC</argLine>
 					<includes>
 						<include>**/junit/suite/TestSuite.java</include>
 					</includes>

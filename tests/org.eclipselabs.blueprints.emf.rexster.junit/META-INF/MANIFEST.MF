@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: BlueprintsEmf Rexster Junit
 Bundle-SymbolicName: org.eclipselabs.blueprints.emf.rexster.junit
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.eclipselabs.blueprints.emf.rexster.junit.Activator
 Bundle-Vendor: Eclipse Labs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
