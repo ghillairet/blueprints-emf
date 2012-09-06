@@ -15,8 +15,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipselabs.blueprints.emf.impl.GraphRegistryImpl;
-
-import com.tinkerpop.blueprints.pgm.IndexableGraph;
+import com.tinkerpop.blueprints.KeyIndexableGraph;
 
 /**
  * 
@@ -28,13 +27,14 @@ public interface GraphURIHandler extends URIHandler {
 	public static final String USE_ID_ATTRIBUTE_AS_KEY = "USE_ID_ATTRIBUTE_AS_KEY";
 	public static final String EXTRINSIC_ID_KEY = "EXTRINSIC_ID_KEY";
 	
-	public static interface Registry extends Map<String, IndexableGraph> {
+	public static interface Registry extends Map<String, KeyIndexableGraph> {
 		
-		IndexableGraph getGraph(URI uri);
+		KeyIndexableGraph getGraph(URI uri);
 		
 		boolean containsURI(URI uri);
 		
 		Registry INSTANCE = new GraphRegistryImpl();
 		
 	}
+	
 }

@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipselabs.blueprints.emf.impl;
 
-import static org.eclipselabs.blueprints.emf.util.GraphUtil.getEdgeIndex;
-import static org.eclipselabs.blueprints.emf.util.GraphUtil.getVertexIndex;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,10 +18,11 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipselabs.blueprints.emf.GraphURIHandler;
-import org.eclipselabs.blueprints.emf.internal.GraphInputStream;
-import org.eclipselabs.blueprints.emf.internal.GraphOutputStream;
+import org.eclipselabs.blueprints.emf.streams.GraphInputStream;
+import org.eclipselabs.blueprints.emf.streams.GraphOutputStream;
 
-import com.tinkerpop.blueprints.pgm.IndexableGraph;
+import com.tinkerpop.blueprints.KeyIndexableGraph;
+import com.tinkerpop.blueprints.Vertex;
 
 /**
  * 
@@ -43,14 +41,15 @@ public class GraphURIHandlerImpl extends URIHandlerImpl implements GraphURIHandl
 	
 	@Override
 	public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException {
-		final IndexableGraph graph = Registry.INSTANCE.getGraph(uri);
+		final KeyIndexableGraph graph = Registry.INSTANCE.getGraph(uri);
 		if (graph == null) {
 			throw new IllegalArgumentException("Cannot find graph for URI "+uri+", please register a graph using GraphURIHandler.Registry.");
 		}
 		
+		prepareIndexes(graph);
 		InputStream inStream = null;
 		try {
-			inStream = new GraphInputStream(graph, getVertexIndex(graph), getEdgeIndex(graph), options);
+			inStream = new GraphInputStream(graph);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,19 +59,28 @@ public class GraphURIHandlerImpl extends URIHandlerImpl implements GraphURIHandl
 	
 	@Override
 	public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException {
-		final IndexableGraph graph = Registry.INSTANCE.getGraph(uri);
+		final KeyIndexableGraph graph = Registry.INSTANCE.getGraph(uri);
+		
 		if (graph == null) {
 			throw new IllegalArgumentException("Cannot find graph for URI "+uri+", please register a graph using GraphURIHandler.Registry.");
 		}
 		
+		prepareIndexes(graph);
 		OutputStream outStream = null;
 		try {
-			outStream = new GraphOutputStream(graph, getVertexIndex(graph), getEdgeIndex(graph), options);
+			outStream = new GraphOutputStream(graph);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return outStream;
+	}
+
+	private void prepareIndexes(KeyIndexableGraph graph) {
+		graph.createKeyIndex("_eClass", Vertex.class);
+		graph.createKeyIndex("_eResource", Vertex.class);
+		graph.createKeyIndex("_eURI", Vertex.class);
+		graph.createKeyIndex("_eContent", Vertex.class);
 	}
 	
 	@Override

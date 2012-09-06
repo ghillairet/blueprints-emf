@@ -15,17 +15,17 @@ import java.util.HashMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipselabs.blueprints.emf.GraphURIHandler.Registry;
 
-import com.tinkerpop.blueprints.pgm.IndexableGraph;
+import com.tinkerpop.blueprints.KeyIndexableGraph;
 
 /**
  * 
  * @author ghillairet
  *
  */
-public class GraphRegistryImpl extends HashMap<String, IndexableGraph> implements Registry {
+public class GraphRegistryImpl extends HashMap<String, KeyIndexableGraph> implements Registry {
 
 	@Override
-	public IndexableGraph getGraph(URI uri) {
+	public KeyIndexableGraph getGraph(URI uri) {
 		URI key = uri;
 		if (key.hasFragment())
 			key = key.trimFragment();
