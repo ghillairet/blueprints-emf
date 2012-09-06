@@ -16,10 +16,9 @@ import org.eclipselabs.example.socnet.Person;
 import org.eclipselabs.example.socnet.SocnetFactory;
 import org.eclipselabs.example.socnet.SocnetPackage;
 
-import com.tinkerpop.blueprints.pgm.Edge;
-import com.tinkerpop.blueprints.pgm.IndexableGraph;
-import com.tinkerpop.blueprints.pgm.Vertex;
-import com.tinkerpop.blueprints.pgm.impls.neo4j.Neo4jGraph;
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.impls.neo4j.Neo4jGraph;
 
 public class Main {
 	
@@ -28,7 +27,7 @@ public class Main {
 		
 		EPackage.Registry.INSTANCE.put(SocnetPackage.eNS_URI, SocnetPackage.eINSTANCE);
 		Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().put("graph", new XMIResourceFactoryImpl());
-		IndexableGraph graph = new Neo4jGraph("data/neo4j/socnet");
+		Neo4jGraph graph = new Neo4jGraph("data/neo4j/socnet");
 		GraphURIHandler.Registry.INSTANCE.put("graph://data/neo4j/socnet/", graph);
 		
 		ResourceSet resourceSet = new ResourceSetImpl();
@@ -70,9 +69,17 @@ public class Main {
 			System.out.println("    "+e);
 		}
 		
+		System.out.println("Neo4J down !!");
+		
+		System.out.println("Unloading resource...");
+		resource.unload();
+		System.out.println("Reloading resource...");
+		resource.load(null);
+		
+		resource.save(System.out, null);
+		
 		System.out.println("Shutdown Neo4J");
 		graph.shutdown();
-		System.out.println("Neo4J down !!");	
 	}
 	
 }
