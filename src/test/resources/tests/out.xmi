@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:model="http://www.eclipselabs.org/model">
+  <model:Node name="e" oneRefNode="/0" manyRefNode="/0 /3" parentOne="/0" parentMany="/0"/>
+  <model:Node name="b">
+    <children href="#//@children.0/@children.0"/>
+  </model:Node>
+  <model:Node name="a">
+    <children href="#//@children.0"/>
+    <oneRefNode href="#//@children.0/@children.0/@children.0/@children.0"/>
+    <manyRefNode href="#//@children.0/@children.0/@children.0/@children.0"/>
+    <manyRefNode href="#//@children.0/@children.0/@children.0"/>
+  </model:Node>
+  <model:Node name="d" parentMany="/0">
+    <children href="#//@children.0/@children.0/@children.0/@children.0"/>
+  </model:Node>
+  <model:Node name="c">
+    <children href="#//@children.0/@children.0/@children.0"/>
+  </model:Node>
+</xmi:XMI>

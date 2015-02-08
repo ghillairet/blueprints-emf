@@ -1,34 +1,60 @@
-Blueprints EMF, [EMF](http://www.eclipse.org/emf) Models in Graph DBs.
+Blueprints EMF
+===
 
-Current version is 0.2.0.
+Uses [Blueprints](https://github.com/tinkerpop/blueprints) to store [EMF](http://www.eclipse.org/emf) models
+in Graph databases such as Neo4J, OrientDB, Titan, etc... .
+
+Current version is 0.3.0.
 
 ### Dependencies
 
-* Blueprints 2.1.0 or later
+* Blueprints 2.6.0 or later
 
 ### Installation
 
-See [wiki](https://github.com/ghillairet/blueprints-emf/wiki/installation)
+Will be available on maven central.
 
-### Example
+For now do
 
-See [example](https://github.com/ghillairet/blueprints-emf/tree/master/examples/blueprints-emf.neo4j.example)
+```
+git clone https://github.com/ghillairet/blueprints-emf.git
+
+cd blueprints-emf
+
+mvn clean install
+```
+
+And install the dependency in your maven project
+
+```xml
+<dependency>
+    <groupId>org.eclipselabs</groupId>
+    <artifactId>blueprints-emf</artifactId>
+    <version>0.3.0</version>
+</dependency>
+```
 
 ### Usage
 
-		TinkerGraph graph = new TinkerGraph();
-		ResourceSet resourceSet = new ResourceSetImpl();
+```java
+TinkerGraph graph = new TinkerGraph();
+ResourceSet resourceSet = new ResourceSetImpl();
 
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new GraphURIHandlerImpl(graph));
+resourceSet
+    .getResourceFactoryRegistry()
+    .getExtensionToFactoryMap()
+    .put("*", new BlueprintsResourceFactory(graph));
 
-		User user = ModelFactory.eINSTANCE.createUser();
-		user.setUserId("1");
-		user.setName("John");
+resourceSet
+    .getURIConverter()
+    .getURIHandlers()
+    .add(0, new GraphHandler());
 
-        GraphURIHandler.Registry.INSTANCE.put("graph://my/graph/users", graph);
-		Resource resource = resourceSet.createResource(URI.createURI("graph:/my/graph/users"));
+User user = ModelFactory.eINSTANCE.createUser();
+user.setUserId("1");
+user.setName("John");
 
-		resource.getContents().add(user);
-		resource.save(null);
-
+Resource resource = resourceSet.createResource(URI.createURI("graph:/my/graph/users"));
+resource.getContents().add(user);
+resource.save(null);
+```

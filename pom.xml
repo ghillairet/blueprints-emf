@@ -1,127 +1,133 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eclipselabs</groupId>
-	<artifactId>blueprints-emf</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.eclipselabs</groupId>
+    <artifactId>blueprints-emf</artifactId>
+    <version>0.3.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
 
-	<modules>
-		<module>bundles/org.eclipselabs.blueprints.emf</module>
-		<module>features/org.eclipselabs.blueprints.emf.feature</module>
-		<module>tests/org.eclipselabs.blueprints.emf.junit</module>
-		<module>tests/org.eclipselabs.blueprints.emf.neo4j.junit</module>
-<!-- 		<module>tests/org.eclipselabs.blueprints.emf.orientdb.junit</module> -->
-		<module>build/repository</module>
-	</modules>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
-	<properties>
-		<tycho-version>0.14.0</tycho-version>
-		<targets>build/repository/target/</targets>
-	</properties>
+    <licenses>
+        <license>
+            <name>EPL</name>
+            <url>www.eclipse.org/legal/epl-v10.html</url>
+        </license>
+    </licenses>
 
-	<repositories>
-		<repository>
-			<id>indigo</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/juno</url>
-		</repository>
-		<repository>
-			<id>p2</id>
-			<layout>p2</layout>
-			<url>http://ghillairet.github.com/p2</url>
-		</repository>
-		<repository>
-			<id>orbit</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/tools/orbit/downloads/drops/S20120726065500/repository/</url>
-		</repository>
-	</repositories>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/ghillairet/blueprints-emf/issues</url>
+    </issueManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <developers>
+        <developer>
+            <id>ghillairet</id>
+            <name>G. Hillairet</name>
+            <email>g.hillairet@gmail.com</email>
+        </developer>
+    </developers>
 
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
+    <scm>
+        <url>scm:git:git@github.com:ghillairet/blueprints-emf.git</url>
+        <connection>scm:git:git@github.com:ghillairet/blueprints-emf.git</connection>
+        <developerConnection>scm:git:git@github.com:ghillairet/blueprints-emf.git</developerConnection>
+    </scm>
 
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-compiler-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
+    <dependencies>
+        <!-- emf -->
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>org.eclipse.emf.ecore</artifactId>
+            <version>2.10.0-v20140514-1158</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>org.eclipse.emf.common</artifactId>
+            <version>2.10.0-v20140514-1158</version>
+        </dependency>
 
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<pomDependencies>consider</pomDependencies>
-				</configuration>
-			</plugin>
+        <!-- blueprints -->
 
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<target>
-						<artifact>
-							<groupId>org.eclipselabs</groupId>
-							<artifactId>blueprints-emf</artifactId>
-							<version>0.2.0-SNAPSHOT</version>
-							<classifier>build/target/blueprints-emf</classifier>
-						</artifact>
-					</target>
-					<pomDependencies>consider</pomDependencies>
-				</configuration>
-			</plugin>
+        <dependency>
+            <groupId>com.tinkerpop.blueprints</groupId>
+            <artifactId>blueprints-core</artifactId>
+            <version>2.6.0</version>
+        </dependency>
 
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-surefire-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<argLine>-server -Xmx512M -XX:+UseConcMarkSweepGC</argLine>
-					<includes>
-						<include>**/junit/suite/TestSuite.java</include>
-					</includes>
-				</configuration>
-			</plugin>
+        <!-- tests -->
 
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-source-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<executions>
-					<execution>
-						<id>plugin-source</id>
-						<goals>
-							<goal>plugin-source</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tinkerpop.blueprints</groupId>
+            <artifactId>blueprints-neo4j-graph</artifactId>
+            <version>2.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j</artifactId>
+            <version>1.9.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+            <version>2.10.0-v20140514-1158</version>
+        </dependency>
+    </dependencies>
 
-		</plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
 
-	</build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <argLine>-Xmx512M</argLine>
+                    <includes>
+                        <include>**/suite/TestSuite.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.5.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>org.eclipselabs.blueprints.emf</Bundle-SymbolicName>
+                        <Bundle-Name>blueprints-emf</Bundle-Name>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Import-Package>
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
